@@ -46,9 +46,9 @@ function billingUpdateSelectOptions() {
     } else {
         billing.innerHTML = `
         <option value="院内治療">院内治療</option>
-        <option value="現場治療">院外治療</option>
+        <option value="現場治療">現場治療</option>
         <option value="院内治療(初心者割)">院内治療(初心者割)</option>
-        <option value="現場治療(初心者割)">院外治療(初心者割)</option>
+        <option value="現場治療(初心者割)">現場治療(初心者割)</option>
         <option value="ゆがみ対応">ゆがみ対応</option>
         <option value="C対応・その他補填">C対応・その他補填</option>`
     }
@@ -206,7 +206,7 @@ function generateText() {
 
     const generatedText = `Date：${dateString}\nName：${name}\n場所：${location}\n症状：${symptomsText}\n治療者：${doctor}\n対処：${actionText}\n請求：${billing}\n備考：${remarks}\n感想「${feedback}」`;
 
-    document.getElementById('outputText').textContent = generatedText;
+    document.getElementById('outputText').value = generatedText;
     document.getElementById('nameDataSourceDiv').hidden = true;
     document.getElementById('locationDataSourceDiv').hidden = true;
     if (document.getElementById('enableClipboard').checked) {
@@ -237,6 +237,8 @@ function clearInput() {
     document.getElementById('nameDataSourceDiv').hidden = true;
     document.getElementById('locationDataSourceDiv').hidden = true;
     document.getElementById('clipboardResult').innerText = "";
+    document.getElementById('disableNameSearchDescription').hidden = true;
+    document.getElementById('disableLocationSearchDescription').hidden = true;
     toggleMultipleNameSelect()
     nameUpdateSelectOptions()
     locationUpdateSelectOptions()
