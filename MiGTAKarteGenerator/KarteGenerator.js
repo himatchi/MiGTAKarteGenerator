@@ -232,7 +232,7 @@ function clearInput() {
     document.getElementById('disableNameSearch').checked = false;
     document.getElementById('multipleNameSelectEnable').checked = false;
     document.getElementById('disableLocationSearch').checked = false;
-    document.getElementById('outputText').textContent = "";
+    document.getElementById('outputText').value = "";
     document.getElementById('multipleNameSelect').innerHTML = "";
     document.getElementById('nameDataSourceDiv').hidden = true;
     document.getElementById('locationDataSourceDiv').hidden = true;
