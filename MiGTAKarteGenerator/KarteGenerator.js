@@ -174,6 +174,27 @@ function generateText() {
         location = location_kana.trim();
     }
 
+    //不明にチェックが入っていたら不明と出力
+    const unknownLocation = document.getElementById('unknownLocation').checked;
+    location = unknownLocation ? "不明" : location;
+
+    let cureLocation = "";
+    const cureLocationSamePlace = document.getElementById('cureLocationSamePlace').checked;
+    const cureLocationMainHospital = document.getElementById('cureLocationMainHospital').checked;
+    const cureLocationNorthHospital = document.getElementById('cureLocationNorthHospital').checked;
+    const cureLocationUserInput = document.getElementById('cureLocationUserInput').checked;
+    const cureLocationText = document.getElementById('cureLocationText').value;
+
+    if (cureLocationSamePlace == true){
+        cureLocation = location;
+    } else if (cureLocationMainHospital == true){
+        cureLocation = "本病院";
+    } else if (cureLocationNorthHospital == true){
+        cureLocation = "北病院";
+    } else if (cureLocationUserInput == true){
+        cureLocation = cureLocationText;
+    }
+
     const symptoms = document.querySelectorAll('input[name="symptom"]:checked');
     const doctor = document.getElementById('doctor').value;
     const billing = document.getElementById('billing').value;
@@ -204,7 +225,7 @@ function generateText() {
         actionText = actionText + "医療キットによる治療を実施";
     }
 
-    const generatedText = `Date：${dateString}\nName：${name}\n場所：${location}\n症状：${symptomsText}\n治療者：${doctor}\n対処：${actionText}\n請求：${billing}\n備考：${remarks}\n感想「${feedback}」`;
+    const generatedText = `Date：${dateString}\nName：${name}\n怪我の場所：${location}\n治療の場所：${cureLocation}\n症状：${symptomsText}\n治療者：${doctor}\n対処：${actionText}\n請求：${billing}\n備考：${remarks}\n感想「${feedback}」`;
 
     document.getElementById('outputText').value = generatedText;
     document.getElementById('nameDataSourceDiv').hidden = true;
@@ -239,6 +260,9 @@ function clearInput() {
     document.getElementById('clipboardResult').innerText = "";
     document.getElementById('disableNameSearchDescription').hidden = true;
     document.getElementById('disableLocationSearchDescription').hidden = true;
+    document.getElementById('unknownLocation').checked= false;
+    document.getElementById('cureLocationMainHospital').checked = true;
+    document.getElementById('cureLocationText').value = "";
     toggleMultipleNameSelect()
     nameUpdateSelectOptions()
     locationUpdateSelectOptions()

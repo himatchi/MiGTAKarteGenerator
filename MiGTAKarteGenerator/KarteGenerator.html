@@ -36,6 +36,7 @@
     <input type="text" id="dateTime" placeholder="日時...">
     <input type="button" value="現在時刻" onclick="setDateTime()"><br><br>
     <table border="0"><tr><td>
+    <label for="nameSrachBox">患者名:</label><br>
     <input type="text" id="nameSearchBox" placeholder="名前検索..." oninput="nameUpdateSelectOptions()"><br>
     <input type="checkbox" id="disableNameSearch" onchange="toggleDisableNameSearchDescription()">
     <label for="disableNameSearch">直接入力</label><br>
@@ -57,15 +58,35 @@
     <span id="disableNameSearchDescription" hidden>検索窓の値を直接カルテに出力する。;区切りで複数名入力可能</span><br>
 
     <table border="0"><tr><td>
+    <label for="locationSearchBox">怪我した場所:</label><br>
     <input type="text" id="locationSearchBox" placeholder="場所検索..." oninput="locationUpdateSelectOptions()"><br>
     <input type="checkbox" id="disableLocationSearch" onchange="toggleDisableLocationSearchDescription()">
-    <label for="disableLocationSearch">直接入力</label>
+    <label for="disableLocationSearch">直接入力</label><br>
+    <input type="checkbox" id="unknownLocation">
+    <label for="unknownLocation">不明</label>
     </td>
     <td>
     <select id="locationResultSelect" size="4"></select>
     </td>
     </tr></table>
     <span id="disableLocationSearchDescription" hidden>検索窓の値を直接カルテに出力する。</span><br>
+
+    <form>
+    <div>治療場所:
+
+        <input type="radio" id="cureLocationSamePlace" name="cureLocation" value="samePlace">
+        <label for="cureLocationSamePlace">現場</label>
+        <input type="radio" id="cureLocationMainHospital" name="cureLocation" value="mainHospital" checked >
+        <label for="cureLocationMainHospital">本病院</label>
+        <input type="radio" id="cureLocationNorthHospital" name="cureLocation" value="northHospital">
+        <label for="cureLocationNorthHospital">北病院</label>
+        <input type="radio" id="cureLocationUserInput" name="cureLocation" value="userInput">
+        <label for="cureLocationUserInput">任意入力</label>
+        <input type="text" id="cureLocationText" placeholder="治療場所...">
+    </div>
+    </form>
+
+    <br>
 
     <label>症状：</label><br>
     <input type="checkbox" id="symptomA" name="symptom" value="打撲">
