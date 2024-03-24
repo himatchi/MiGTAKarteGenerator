@@ -406,12 +406,10 @@ function applyPreset(){
     const selectedIndex = presetSelect.selectedIndex;
 
     const preset = presets[selectedIndex];
+    clearInput();
 
     document.getElementById('nameSearchBox').value = preset.nameSearchBox;
     document.getElementById('locationSearchBox').value = preset.locationSearchBox;
-    document.getElementById('billing').value = preset.billing;
-    document.getElementById('remarks').value = preset.remarks;
-    document.getElementById('feedback').value = preset.feedback;
     document.getElementById('symptomA').checked = preset.symptomA; //打撲
     document.getElementById('symptomB').checked = preset.symptomB; //出血
     document.getElementById('symptomC').checked = preset.symptomC; //銃創
@@ -419,6 +417,10 @@ function applyPreset(){
     document.getElementById('symptomE').checked = preset.symptomE; //気絶
     document.getElementById('transportA').checked = preset.transportA; //本病院
     document.getElementById('transportB').checked = preset.transportB; //北病院
+    billingUpdateSelectOptions();
+    document.getElementById('billing').value = preset.billing;
+    document.getElementById('remarks').value = preset.remarks;
+    document.getElementById('feedback').value = preset.feedback;
     document.getElementById('disableNameSearch').checked = preset.disableNameSearch;
     document.getElementById('multipleNameSelectEnable').checked = preset.multipleNameSelectEnable;
     document.getElementById('disableLocationSearch').checked = preset.disableLocationSearch;
@@ -434,9 +436,6 @@ function generatePreset(){
     const name = document.getElementById('presetName').value;
     const nameSearchBox = document.getElementById('nameSearchBox').value;
     const locationSearchBox = document.getElementById('locationSearchBox').value;
-    const billing = document.getElementById('billing').value;
-    const remarks = document.getElementById('remarks').value;
-    const feedback = document.getElementById('feedback').value;
     const symptomA = document.getElementById('symptomA').checked; //打撲
     const symptomB = document.getElementById('symptomB').checked; //出血
     const symptomC = document.getElementById('symptomC').checked; //銃創
@@ -444,6 +443,9 @@ function generatePreset(){
     const symptomE = document.getElementById('symptomE').checked; //気絶
     const transportA = document.getElementById('transportA').checked; //本病院
     const transportB = document.getElementById('transportB').checked; //北病院
+    const billing = document.getElementById('billing').value;
+    const remarks = document.getElementById('remarks').value;
+    const feedback = document.getElementById('feedback').value;
     const disableNameSearch = document.getElementById('disableNameSearch').checked;
     const multipleNameSelectEnable = document.getElementById('multipleNameSelectEnable').checked;
     const disableLocationSearch = document.getElementById('disableLocationSearch').checked;
