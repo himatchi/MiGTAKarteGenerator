@@ -1,3 +1,5 @@
+var presets = [];
+
 function nameUpdateSelectOptions() {
     const searchBox = document.getElementById('nameSearchBox');
     const resultSelect = document.getElementById('nameResultSelect');
@@ -117,14 +119,14 @@ function setDateTime(){
 
 function removeMultipleName() {
     // 右のセレクト要素を取得
-    var rightSelect = document.getElementById("multipleNameSelect");
+    let rightSelect = document.getElementById("multipleNameSelect");
 
     // 右のセレクト要素で選択されているオプションを取得
-    var selectedOptions = rightSelect.selectedOptions;
+    let selectedOptions = rightSelect.selectedOptions;
 
     // 選択されている各オプションを削除
-    for (var i = selectedOptions.length - 1; i >= 0; i--) {
-        var option = selectedOptions[i];
+    for (let i = selectedOptions.length - 1; i >= 0; i--) {
+        let option = selectedOptions[i];
         rightSelect.removeChild(option);
     }
 }
@@ -263,10 +265,12 @@ function clearInput() {
     document.getElementById('unknownLocation').checked= false;
     document.getElementById('cureLocationMainHospital').checked = true;
     document.getElementById('cureLocationText').value = "";
+    document.getElementById('presetName').value = "";
     toggleMultipleNameSelect()
     nameUpdateSelectOptions()
     locationUpdateSelectOptions()
     billingUpdateSelectOptions()
+    presetUpdateSelectOptions()
 }
 
 function saveData() {
@@ -274,7 +278,8 @@ function saveData() {
     const nameDataSource = document.getElementById('nameDataSource').value;
     const locationDataSource = document.getElementById('locationDataSource').value;
     const enableClipboard = document.getElementById('enableClipboard').checked;
-    const data = { doctor, nameDataSource, locationDataSource, enableClipboard };
+    const autoPresetApply = document.getElementById('autoPresetApply').checked;
+    const data = { doctor, nameDataSource, locationDataSource, enableClipboard, autoPresetApply, presets};
 
     localStorage.setItem('MiGTAKarteGeneratorData', JSON.stringify(data));
 }
@@ -287,6 +292,8 @@ function loadData() {
         document.getElementById('nameDataSource').value = data.nameDataSource ? data.nameDataSource : "";
         document.getElementById('locationDataSource').value = data.locationDataSource ? data.locationDataSource : "";
         document.getElementById('enableClipboard').checked = data.enableClipboard ? data.enableClipboard : false;
+        document.getElementById('autoPresetApply').checked = data.autoPresetApply ? data.autoPresetApply : false;
+        presets = data.presets ? data.presets : [];
     }
 }
 
@@ -294,7 +301,7 @@ function exportData() {
     const doctor = document.getElementById('doctor').value;
     const nameDataSource = document.getElementById('nameDataSource').value;
     const locationDataSource = document.getElementById('locationDataSource').value;
-    const data = { doctor, nameDataSource, locationDataSource };
+    const data = { doctor, nameDataSource, locationDataSource, presets };
     const jsonData = JSON.stringify(data);
     const blob = new Blob([jsonData], {type: "application/json"});
     const url = URL.createObjectURL(blob);
@@ -312,10 +319,7 @@ function exportData() {
 // ページ読み込み時のデータ読み込み処理など
 document.addEventListener('DOMContentLoaded', function() {
     loadData();
-    nameUpdateSelectOptions()
-    locationUpdateSelectOptions()
-    billingUpdateSelectOptions()
-    clearInput()
+    clearInput();
 
   //インポート処理
   document.getElementById('importData').addEventListener('change', function(event) {
@@ -332,10 +336,12 @@ document.addEventListener('DOMContentLoaded', function() {
       try {
         const json = JSON.parse(text);
         if(json){
-          document.getElementById('doctor').value = json.doctor;
-          document.getElementById('nameDataSource').value = json.nameDataSource;
-          document.getElementById('locationDataSource').value = json.locationDataSource;
+          document.getElementById('doctor').value = json.doctor ? json.doctor : "";
+          document.getElementById('nameDataSource').value = json.nameDataSource ? json.nameDataSource : "";
+          document.getElementById('locationDataSource').value = json.locationDataSource ? json.locationDataSource : "";
+          presets = json.presets ? json.presets : [];
           saveData();
+          clearInput();
         }
       } catch (error) {
         console.error('JSONの解析に失敗しました:', error);
@@ -349,15 +355,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function addMultipleName() {
-    var leftSelect = document.getElementById("nameResultSelect");
-    var rightSelect = document.getElementById("multipleNameSelect");
+    let leftSelect = document.getElementById("nameResultSelect");
+    let rightSelect = document.getElementById("multipleNameSelect");
 
     // 左のセレクト要素で選択されているオプションを取得
-    var selectedOptions = leftSelect.selectedOptions;
+    let selectedOptions = leftSelect.selectedOptions;
 
     // 選択されている各オプションを右のセレクト要素に追加
-    for (var i = 0; i < selectedOptions.length; i++) {
-        var option = selectedOptions[i];
+    for (let i = 0; i < selectedOptions.length; i++) {
+        let option = selectedOptions[i];
         // 新しいオプション要素を作成して右のセレクト要素に追加
         rightSelect.appendChild(option.cloneNode(true));
     }
@@ -383,4 +389,138 @@ function copyTextToClipboard(text) {
       clipboardResult.classList.remove('fade-out'); // 2秒後に透明度を0にして徐々に消す
     }, 1950); // 表示してから透明度を変更するまでの時間
   });
+}
+
+function presetUpdateSelectOptions() {
+    const resultSelect = document.getElementById('presetSelect');
+    resultSelect.innerHTML = ''; // select要素をクリア
+    presets.forEach(function(preset) {
+        const option = document.createElement('option');
+        option.text = preset.name;
+        resultSelect.add(option);
+    });
+}
+
+function applyPreset(){
+    const presetSelect = document.getElementById('presetSelect');
+    const selectedIndex = presetSelect.selectedIndex;
+
+    const preset = presets[selectedIndex];
+
+    document.getElementById('nameSearchBox').value = preset.nameSearchBox;
+    document.getElementById('locationSearchBox').value = preset.locationSearchBox;
+    document.getElementById('billing').value = preset.billing;
+    document.getElementById('remarks').value = preset.remarks;
+    document.getElementById('feedback').value = preset.feedback;
+    document.getElementById('symptomA').checked = preset.symptomA; //打撲
+    document.getElementById('symptomB').checked = preset.symptomB; //出血
+    document.getElementById('symptomC').checked = preset.symptomC; //銃創
+    document.getElementById('symptomD').checked = preset.symptomD; //火傷
+    document.getElementById('symptomE').checked = preset.symptomE; //気絶
+    document.getElementById('transportA').checked = preset.transportA; //本病院
+    document.getElementById('transportB').checked = preset.transportB; //北病院
+    document.getElementById('disableNameSearch').checked = preset.disableNameSearch;
+    document.getElementById('multipleNameSelectEnable').checked = preset.multipleNameSelectEnable;
+    document.getElementById('disableLocationSearch').checked = preset.disableLocationSearch;
+    document.getElementById('multipleNameSelect').innerHTML = preset.multipleNameSelect;
+    document.getElementById('disableNameSearchDescription').hidden = preset.disableNameSearchDescription;
+    document.getElementById('disableLocationSearchDescription').hidden = preset.disableLocationSearchDescription;
+    document.getElementById('unknownLocation').checked = preset.unknownLocation;
+    document.getElementById('cureLocationMainHospital').checked = preset.cureLocationMainHospital;
+    document.getElementById('cureLocationText').value = preset.cureLocationText;
+}
+
+function generatePreset(){
+    const name = document.getElementById('presetName').value;
+    const nameSearchBox = document.getElementById('nameSearchBox').value;
+    const locationSearchBox = document.getElementById('locationSearchBox').value;
+    const billing = document.getElementById('billing').value;
+    const remarks = document.getElementById('remarks').value;
+    const feedback = document.getElementById('feedback').value;
+    const symptomA = document.getElementById('symptomA').checked; //打撲
+    const symptomB = document.getElementById('symptomB').checked; //出血
+    const symptomC = document.getElementById('symptomC').checked; //銃創
+    const symptomD = document.getElementById('symptomD').checked; //火傷
+    const symptomE = document.getElementById('symptomE').checked; //気絶
+    const transportA = document.getElementById('transportA').checked; //本病院
+    const transportB = document.getElementById('transportB').checked; //北病院
+    const disableNameSearch = document.getElementById('disableNameSearch').checked;
+    const multipleNameSelectEnable = document.getElementById('multipleNameSelectEnable').checked;
+    const disableLocationSearch = document.getElementById('disableLocationSearch').checked;
+    const multipleNameSelect = document.getElementById('multipleNameSelect').innerHTML;
+    const disableNameSearchDescription = document.getElementById('disableNameSearchDescription').hidden;
+    const disableLocationSearchDescription = document.getElementById('disableLocationSearchDescription').hidden;
+    const unknownLocation = document.getElementById('unknownLocation').checked;
+    const cureLocationMainHospital = document.getElementById('cureLocationMainHospital').checked;
+    const cureLocationText = document.getElementById('cureLocationText').value;
+
+    const presetData = {
+        name, 
+        nameSearchBox,
+        locationSearchBox,
+        billing,
+        remarks,
+        feedback,
+        symptomA,
+        symptomB,
+        symptomC,
+        symptomD,
+        symptomE,
+        transportA,
+        transportB,
+        disableNameSearch,
+        multipleNameSelectEnable,
+        disableLocationSearch,
+        multipleNameSelect,
+        disableNameSearchDescription,
+        disableLocationSearchDescription,
+        unknownLocation,
+        cureLocationMainHospital,
+        cureLocationText
+    }
+
+    return presetData;
+
+}
+
+function addPreset(){
+    const presetSelect = document.getElementById('presetSelect');
+    presets.push(generatePreset());
+    presetUpdateSelectOptions();
+    presetSelect.selectedIndex = presetSelect.length - 1;
+    saveData();
+}
+
+
+function savePreset(){
+    const presetSelect = document.getElementById('presetSelect');
+    const selectedIndex = presetSelect.selectedIndex;
+
+    presets[selectedIndex] = generatePreset();
+    presetUpdateSelectOptions();
+    presetSelect.selectedIndex = selectedIndex;
+    saveData();
+}
+
+function deletePreset(){
+    const presetSelect = document.getElementById('presetSelect');
+    const presetName = document.getElementById('presetName');
+    const selectedIndex = presetSelect.selectedIndex;
+    if(selectedIndex != -1){
+        presets.splice(selectedIndex, 1);
+        presetUpdateSelectOptions();
+        presetName.value = "";
+    }
+    saveData();
+}
+
+function changePresetSelect(){
+    const presetSelect = document.getElementById('presetSelect');
+    const presetOption = presetSelect.selectedOptions[0];
+    const presetName = document.getElementById('presetName');
+    const autoPresetApply = document.getElementById('autoPresetApply').checked
+    presetName.value = presetOption.value;
+    if(autoPresetApply){
+        applyPreset();
+    }
 }
