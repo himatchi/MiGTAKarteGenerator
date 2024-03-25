@@ -406,7 +406,6 @@ function applyPreset(){
     const selectedIndex = presetSelect.selectedIndex;
 
     const preset = presets[selectedIndex];
-    clearInput();
 
     document.getElementById('nameSearchBox').value = preset.nameSearchBox;
     document.getElementById('locationSearchBox').value = preset.locationSearchBox;
@@ -524,5 +523,37 @@ function changePresetSelect(){
     presetName.value = presetOption.value;
     if(autoPresetApply){
         applyPreset();
+    }
+}
+
+function replaceArrayElements(array, targetId, sourceId) {
+    return array.reduce((resultArray, element, id, originalArray) => [
+        ...resultArray,
+        id === targetId ? originalArray[sourceId] :
+        id === sourceId ? originalArray[targetId] :
+        element
+    ], []);
+}
+
+function presetMoveUp() {
+    const presetSelect = document.getElementById('presetSelect');
+    const presetOption = presetSelect.selectedOptions[0];
+    const selectedIndex = presetSelect.selectedIndex;
+    if (selectedIndex > 0){
+        presets = replaceArrayElements(presets, selectedIndex, selectedIndex - 1);
+        presetUpdateSelectOptions()
+        presetSelect.selectedIndex = selectedIndex - 1;
+        saveData();
+    }
+}
+
+function presetMoveDown() {
+    const presetSelect = document.getElementById('presetSelect');
+    const selectedIndex = presetSelect.selectedIndex;
+    if (selectedIndex < presetSelect.length - 1){
+        presets = replaceArrayElements(presets, selectedIndex, selectedIndex + 1);
+        presetUpdateSelectOptions()
+        presetSelect.selectedIndex = selectedIndex + 1;
+        saveData();
     }
 }

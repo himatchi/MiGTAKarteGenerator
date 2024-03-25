@@ -41,11 +41,14 @@
     <select id="presetSelect" size="4" onchange="changePresetSelect()">
     </select>
     </td><td>
-    <input type="text" placeholder="プリセット名" id="presetName"></input><br><br>
-    <input type="button" value="読込" onclick="applyPreset()"></input>
+    <input type="text" placeholder="プリセット名" id="presetName"></input><br>
+    <input type="button" value="↑" onclick="presetMoveUp()"></input>
+    <input type="button" value="↓" onclick="presetMoveDown()"></input>
     <input type="button" value="追加" onclick="addPreset()"></input>
     <input type="button" value="上書き" onclick="savePreset()"></input>
     <input type="button" value="削除" onclick="deletePreset()"></input>
+    <br>
+    <input type="button" value="読込" onclick="applyPreset()"></input>
     <br>
     <input type="checkbox" id="autoPresetApply" onchange="saveData()">
     <label for="autoPresetApply">選択時に自動読込</label>
