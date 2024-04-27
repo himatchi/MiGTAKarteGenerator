@@ -425,7 +425,7 @@ function applyPreset(){
     document.getElementById('billing').value = preset.billing;
     document.getElementById('remarks').value = preset.remarks;
     document.getElementById('feedback').value = preset.feedback;
-    document.getElementById('locationResultSelect').selectedIndex = preset.selectedLocationIndex;
+    document.getElementById('locationResultSelect').value = preset.selectedLocation;
     document.getElementById('disableLocationSearch').checked = preset.disableLocationSearch;
     document.getElementById('disableLocationSearchDescription').hidden = preset.disableLocationSearchDescription;
     document.getElementById('unknownLocation').checked = preset.unknownLocation;
@@ -449,7 +449,7 @@ function generatePreset(){
     const symptomE = document.getElementById('symptomE').checked; //気絶
     const transportA = document.getElementById('transportA').checked; //本病院
     const transportB = document.getElementById('transportB').checked; //北病院
-    const selectedLocationIndex = document.getElementById('locationResultSelect').selectedIndex;
+    const selectedLocation = document.getElementById('locationResultSelect').value;
     const disableLocationSearch = document.getElementById('disableLocationSearch').checked;
     const disableLocationSearchDescription = document.getElementById('disableLocationSearchDescription').hidden;
     const unknownLocation = document.getElementById('unknownLocation').checked;
@@ -472,7 +472,7 @@ function generatePreset(){
         symptomE,
         transportA,
         transportB,
-        selectedLocationIndex,
+        selectedLocation,
         disableLocationSearch,
         disableLocationSearchDescription,
         unknownLocation,
