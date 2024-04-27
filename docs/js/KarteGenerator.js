@@ -412,8 +412,8 @@ function applyPreset(){
 
     const preset = presets[selectedIndex];
 
-    document.getElementById('nameSearchBox').value = preset.nameSearchBox;
     document.getElementById('locationSearchBox').value = preset.locationSearchBox;
+    locationUpdateSelectOptions();
     document.getElementById('symptomA').checked = preset.symptomA; //打撲
     document.getElementById('symptomB').checked = preset.symptomB; //出血
     document.getElementById('symptomC').checked = preset.symptomC; //銃創
@@ -425,21 +425,23 @@ function applyPreset(){
     document.getElementById('billing').value = preset.billing;
     document.getElementById('remarks').value = preset.remarks;
     document.getElementById('feedback').value = preset.feedback;
-    document.getElementById('disableNameSearch').checked = preset.disableNameSearch;
-    document.getElementById('multipleNameSelectEnable').checked = preset.multipleNameSelectEnable;
+    document.getElementById('locationResultSelect').selectedIndex = preset.selectedLocationIndex;
     document.getElementById('disableLocationSearch').checked = preset.disableLocationSearch;
-    document.getElementById('multipleNameSelect').innerHTML = preset.multipleNameSelect;
-    document.getElementById('disableNameSearchDescription').hidden = preset.disableNameSearchDescription;
     document.getElementById('disableLocationSearchDescription').hidden = preset.disableLocationSearchDescription;
     document.getElementById('unknownLocation').checked = preset.unknownLocation;
+    document.getElementById('cureLocationSamePlace').checked = preset.cureLocationSamePlace;
     document.getElementById('cureLocationMainHospital').checked = preset.cureLocationMainHospital;
+    document.getElementById('cureLocationNorthHospital').checked = preset.cureLocationNorthHospital;
+    document.getElementById('cureLocationUserInput').checked = preset.cureLocationUserInput;
     document.getElementById('cureLocationText').value = preset.cureLocationText;
 }
 
 function generatePreset(){
     const name = document.getElementById('presetName').value;
-    const nameSearchBox = document.getElementById('nameSearchBox').value;
     const locationSearchBox = document.getElementById('locationSearchBox').value;
+    const billing = document.getElementById('billing').value;
+    const remarks = document.getElementById('remarks').value;
+    const feedback = document.getElementById('feedback').value;
     const symptomA = document.getElementById('symptomA').checked; //打撲
     const symptomB = document.getElementById('symptomB').checked; //出血
     const symptomC = document.getElementById('symptomC').checked; //銃創
@@ -447,22 +449,18 @@ function generatePreset(){
     const symptomE = document.getElementById('symptomE').checked; //気絶
     const transportA = document.getElementById('transportA').checked; //本病院
     const transportB = document.getElementById('transportB').checked; //北病院
-    const billing = document.getElementById('billing').value;
-    const remarks = document.getElementById('remarks').value;
-    const feedback = document.getElementById('feedback').value;
-    const disableNameSearch = document.getElementById('disableNameSearch').checked;
-    const multipleNameSelectEnable = document.getElementById('multipleNameSelectEnable').checked;
+    const selectedLocationIndex = document.getElementById('locationResultSelect').selectedIndex;
     const disableLocationSearch = document.getElementById('disableLocationSearch').checked;
-    const multipleNameSelect = document.getElementById('multipleNameSelect').innerHTML;
-    const disableNameSearchDescription = document.getElementById('disableNameSearchDescription').hidden;
     const disableLocationSearchDescription = document.getElementById('disableLocationSearchDescription').hidden;
     const unknownLocation = document.getElementById('unknownLocation').checked;
+    const cureLocationSamePlace = document.getElementById('cureLocationSamePlace').checked;
     const cureLocationMainHospital = document.getElementById('cureLocationMainHospital').checked;
+    const cureLocationNorthHospital = document.getElementById('cureLocationNorthHospital').checked;
+    const cureLocationUserInput = document.getElementById('cureLocationUserInput').checked;
     const cureLocationText = document.getElementById('cureLocationText').value;
 
     const presetData = {
-        name, 
-        nameSearchBox,
+        name,
         locationSearchBox,
         billing,
         remarks,
@@ -474,14 +472,14 @@ function generatePreset(){
         symptomE,
         transportA,
         transportB,
-        disableNameSearch,
-        multipleNameSelectEnable,
+        selectedLocationIndex,
         disableLocationSearch,
-        multipleNameSelect,
-        disableNameSearchDescription,
         disableLocationSearchDescription,
         unknownLocation,
+        cureLocationSamePlace,
         cureLocationMainHospital,
+        cureLocationNorthHospital,
+        cureLocationUserInput,
         cureLocationText
     }
 
