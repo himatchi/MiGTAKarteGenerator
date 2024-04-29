@@ -108,7 +108,7 @@ function refreshWanted(newRawData, oldRawData){
         return itemDate > oneDayAgo;
     });
   }
-  console.log(data);
+
   //古いデータから不慮に消えてるものがあったら復旧する
   const oldFilteredRawData = oldRawData.filter((item)=>{
     return item.text.includes('指名手配情報');
@@ -117,8 +117,8 @@ function refreshWanted(newRawData, oldRawData){
     let newData = [];
     oldFilteredRawData.forEach((item=>{
       const id = item.id;
-      const createAt = Date.parse(item.createAt);
-      const rawText = item.text;
+      const createAt = new Date(item.createdAt);
+      const rawText = removeFirstAndLastFour(item.text);
       const nameMatch = item.text.match(/名前：\n?- (.+)/);
       const name = nameMatch ? nameMatch[1] : "";
       const limitMatch = item.text.match(/時間：~ (\d\d\/\d\d \d\d:\d\d)/);
@@ -147,8 +147,8 @@ function refreshWanted(newRawData, oldRawData){
     let newData = [];
     newFilteredRawData.forEach((item=>{
       const id = item.id;
-      const createAt = Date.parse(item.createAt);
-      const rawText = item.text;
+      const createAt = new Date(item.createdAt);
+      const rawText = removeFirstAndLastFour(item.text);
       const nameMatch = item.text.match(/名前：\n?- (.+)/);
       const name = nameMatch ? nameMatch[1] : "";
       const limitMatch = item.text.match(/時間：~ (\d\d\/\d\d \d\d:\d\d)/);
@@ -222,7 +222,7 @@ function selecedWantedChanged(){
   const wanted = loadedData[selectedIndex];
   wantedTime.value = formatDateToDatetimeLocal(new Date(wanted.limit));
   wantedName.value = wanted.name;
-  wantedDescription.innerText = wanted.rawText;
+  wantedDescription.value = wanted.rawText;
 }
 
 function formatDateToDatetimeLocal(date) {
@@ -277,6 +277,15 @@ function switchAutoReloadWanted(){
   } else {
     clearInterval(autoReloadTimer);
   }
+}
+
+function removeFirstAndLastFour(str) {
+  // 文字列が14文字未満の場合は、先頭と末尾の文字を削除できないため空文字列を返す
+  if (str.length < 14) {
+      return "";
+  }
+  // 先頭10文字をスキップし、末尾4文字手前までの部分文字列を取り出す
+  return str.slice(10, -4);
 }
 
 function test(){
