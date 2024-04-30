@@ -317,4 +317,5 @@ document.addEventListener('DOMContentLoaded', function() {
   loadSettings();
   //初期化
   clearWanted();
+  switchAutoReloadWanted();
 });
