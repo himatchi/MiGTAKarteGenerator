@@ -157,9 +157,16 @@ function refreshWanted(newRawData, oldRawData){
   //新しいデータを追加する
   const newData = generateWanted(newRawData);
   data = [...newData, ...data];
-  
-  //createAtでソート
-  data.sort((a, b) => b.createAt - a.createdAt);
+
+  //limitでソート。ただしisDisplayがfalseの場合、末尾へ
+  data.sort((a, b) => {
+    // isDisplayedがfalseの場合は末尾へ
+    if (a.isDisplay !== b.isDisplay) {
+      return a.isDisplay ? -1 : 1;
+    }
+    // isDisplayedが同じ場合はlimitで降順ソート
+    return Date.parse(b.limit) - Date.parse(a.limit)
+  });
 
   //重複している名前があれば、より新しいもののみ残して削除
   data = removeDuplicatesByProperty(data, 'name');
@@ -246,6 +253,8 @@ function addWanted(){
   loadedData.push({
     id, createAt, rawText, name, limit, isActive, isDisplay
   });
+  //limitでソート
+  loadedData.sort((a, b) => Date.parse(b.limit) - Date.parse(a.limit));
   localStorage.setItem('MiGTAWantedCheckerData', JSON.stringify(loadedData));
   showWanted(loadedData);
 }
@@ -290,13 +299,24 @@ function removeDuplicatesByProperty(array, propName) {
   const unique = new Map();
 
   array.forEach(obj => {
-    if (!unique.has(obj[propName])) {
-      unique.set(obj[propName], obj);
+    const normalizedKey = normalizeString(obj[propName]);
+    if (!unique.has(normalizedKey)) {
+        unique.set(normalizedKey, obj);
     }
   });
 
   // `Map.prototype.values()` で Map の値のみを取得し、配列に変換
   return Array.from(unique.values());
+}
+
+function normalizeString(str) {
+    // 全角数字を半角に変換
+    const fullWidthToHalfWidth = str.replace(/[０-９]/g, char => {
+      return String.fromCharCode(char.charCodeAt(0) - 0xFEE0);
+  });
+
+  // 小文字に変換し、すべての種類のスペースを削除
+  return fullWidthToHalfWidth.toLowerCase().replace(/[\s　]+/g, '');
 }
 
 function switchDisplayWantedChecker(){
