@@ -277,6 +277,7 @@ function switchAutoReloadWanted(){
   } else {
     clearInterval(autoReloadTimer);
   }
+  saveSettings();
 }
 
 function removeFirstAndLastFour(str) {
@@ -287,3 +288,33 @@ function removeFirstAndLastFour(str) {
   // 先頭10文字をスキップし、末尾4文字手前までの部分文字列を取り出す
   return str.slice(10, -4);
 }
+
+function switchDisplayWantedChecker(){
+  const wantedFinderTd = document.getElementById('wantedFinderTd');
+  const isWantedFinderDisplayed = wantedFinderTd.hidden;
+  wantedFinderTd.hidden = !isWantedFinderDisplayed;
+  saveSettings();
+}
+
+function saveSettings(){
+  const isAutoReloadWanted = document.getElementById('autoReloadWanted').checked;
+  const isWantedFinderHidden= document.getElementById('wantedFinderTd').hidden;
+  const settings = {isAutoReloadWanted, isWantedFinderHidden};
+  localStorage.setItem('MiGTAWantedCheckerSettings', JSON.stringify(settings));
+}
+
+function loadSettings(){
+  const settings = JSON.parse(localStorage.getItem('MiGTAWantedCheckerSettings'));
+  if (settings){
+    document.getElementById('autoReloadWanted').checked = settings.isAutoReloadWanted ? settings.isAutoReloadWanted : false;
+    document.getElementById('wantedFinderTd').hidden = settings.isWantedFinderHidden ? settings.isWantedFinderHidden : false;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  //現在のデータを読み込み
+  reloadWanted();
+  loadSettings();
+  //初期化
+  clearWanted();
+});

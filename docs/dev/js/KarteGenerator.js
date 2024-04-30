@@ -325,8 +325,6 @@ function exportData() {
 document.addEventListener('DOMContentLoaded', function() {
     loadData();
     clearInput();
-    const loadedData = JSON.parse(localStorage.getItem('MiGTAWantedCheckerData'));
-    showWanted(loadedData);
 
   //インポート処理
   document.getElementById('importData').addEventListener('change', function(event) {

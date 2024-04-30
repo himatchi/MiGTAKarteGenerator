@@ -170,9 +170,10 @@
 <br><br>
 <button onclick="exportData()">エクスポート</button><br>
 <label>インポート：</label>
-<input type="file" id="importData" accept=".json" />
+<input type="file" id="importData" accept=".json" /><br><br>
+<button onclick="switchDisplayWantedChecker()">指名手配チェッカー表示/非表示</button>
 </td>
-<td style="vertical-align: top;">
+<td style="vertical-align: top;" id="wantedFinderTd">
   指名手配メモ<br>
   <select id="wantedList" size="20" onchange="selecedWantedChanged()"></select>
   <br>
