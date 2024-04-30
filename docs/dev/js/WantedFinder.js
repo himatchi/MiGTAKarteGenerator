@@ -6,7 +6,7 @@ async function reloadWanted(){
   if (loadedData) {
 
     // 現在の日時から24時間前の日時をミリ秒で取得
-    const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000 * 3;
+    const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
 
     // createdAtが24時間以内の要素のみを抽出
     data = loadedData.filter(item => {
@@ -49,7 +49,7 @@ async function fetchWanted(storedData, fetchedData){
     continueFlag = false;
   }
   // 現在の日時から24時間前の日時をミリ秒で取得
-  const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000 * 3;
+  const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
   if(newData.length > 0){
     const lastItemDate = Date.parse(newData[newData.length - 1].createdAt)
     if(lastItemDate < oneDayAgo){
