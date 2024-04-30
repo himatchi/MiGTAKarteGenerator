@@ -99,13 +99,13 @@ function refreshWanted(newRawData, oldRawData){
   const loadedData = JSON.parse(localStorage.getItem('MiGTAWantedCheckerData'));
   let data = [];
   if(loadedData){
-    // 現在の日時から24時間前の日時をミリ秒で取得
-    const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
+    // 現在の日時日時をミリ秒で取得
+    const nowTime = Date.now();
   
-    // createdAtが24時間以内の要素のみを抽出
+    // limitが超過している要素を削除
     data = loadedData.filter(item => {
         const itemDate = Date.parse(item.limit);
-        return itemDate > oneDayAgo;
+        return itemDate > nowTime;
     });
   }
 
