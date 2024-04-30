@@ -6,7 +6,7 @@ async function reloadWanted(){
   if (loadedData) {
 
     // 現在の日時から24時間前の日時をミリ秒で取得
-    const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
+    const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000 * 3;
 
     // createdAtが24時間以内の要素のみを抽出
     data = loadedData.filter(item => {
@@ -49,7 +49,7 @@ async function fetchWanted(storedData, fetchedData){
     continueFlag = false;
   }
   // 現在の日時から24時間前の日時をミリ秒で取得
-  const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
+  const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000 * 3;
   if(newData.length > 0){
     const lastItemDate = Date.parse(newData[newData.length - 1].createdAt)
     if(lastItemDate < oneDayAgo){
@@ -95,6 +95,40 @@ function showWanted(wantedData){
   return;
 }
 
+function generateWanted(rawData){
+  const FilteredRawData = rawData.filter((item)=>{
+    return item.text.includes('指名手配情報');
+  })
+  let newData = [];
+  if(FilteredRawData && FilteredRawData.length > 0){
+    FilteredRawData.forEach((item=>{
+      const nameBlockText = item.text.split('時間：')[0];
+      const regex = /「([^」]+)」|- ([^「」\n]+)/gm;
+      let match;
+      const names = [];
+      
+      while ((match = regex.exec(nameBlockText)) !== null) {
+        const name = match[1] || match[2];
+        names.push(name);
+      }
+      
+      names.forEach((name)=>{
+        const id = item.id;
+        const createAt = new Date(item.createdAt);
+        const rawText = removeFirstAndLastFour(item.text);
+        const limitMatch = item.text.match(/時間：~ (\d\d\/\d\d \d\d:\d\d)/);
+        const limit = limitMatch ? parseFutureDate(limitMatch[1]) : null;
+        const isActive = true;
+        const isDisplay = true;
+        newData.push({
+          id, createAt, rawText, name, limit, isActive, isDisplay
+        });
+      });
+    }));
+  }
+  return newData;
+}
+
 function refreshWanted(newRawData, oldRawData){
   const loadedData = JSON.parse(localStorage.getItem('MiGTAWantedCheckerData'));
   let data = [];
@@ -110,58 +144,19 @@ function refreshWanted(newRawData, oldRawData){
   }
 
   //古いデータから不慮に消えてるものがあったら復旧する
-  const oldFilteredRawData = oldRawData.filter((item)=>{
-    return item.text.includes('指名手配情報');
-  })
-  if(oldFilteredRawData && oldFilteredRawData.length > 0){
-    let newData = [];
-    oldFilteredRawData.forEach((item=>{
-      const id = item.id;
-      const createAt = new Date(item.createdAt);
-      const rawText = removeFirstAndLastFour(item.text);
-      const nameMatch = item.text.match(/名前：\n?- (.+)/);
-      const name = nameMatch ? nameMatch[1] : "";
-      const limitMatch = item.text.match(/時間：~ (\d\d\/\d\d \d\d:\d\d)/);
-      const limit = limitMatch ? parseFutureDate(limitMatch[1]) : null;
-      const isActive = true;
-      const isDisplay = true;
-      newData.push({
-        id, createAt, rawText, name, limit, isActive, isDisplay
-      });
-    }));
+  const oldData = generateWanted(oldRawData);
 
-    //復旧したデータのうち、表にIDが存在しないものを追加
-    newData.forEach((item)=>{
-      if(data && data.some(search=> search.id === item.id) == false){
-        data.push(item);
-      }
-    })
-  }
+  //復旧したデータのうち、表にIDが存在しないものを追加
+  oldData.forEach((item)=>{
+    if(data && data.some(search=> search.id === item.id) == false){
+      data.push(item);
+    }
+  });
 
   //新しいデータを追加する
-  if(newRawData){
-    const newFilteredRawData = newRawData.filter((item)=>{
-      return item.text.includes('指名手配情報');
-    })
-
-    let newData = [];
-    newFilteredRawData.forEach((item=>{
-      const id = item.id;
-      const createAt = new Date(item.createdAt);
-      const rawText = removeFirstAndLastFour(item.text);
-      const nameMatch = item.text.match(/名前：\n?- (.+)/);
-      const name = nameMatch ? nameMatch[1] : "";
-      const limitMatch = item.text.match(/時間：~ (\d\d\/\d\d \d\d:\d\d)/);
-      const limit = limitMatch ? parseFutureDate(limitMatch[1]) : null;
-      const isActive = true;
-      const isDisplay = true;
-      newData.push({
-        id, createAt, rawText, name, limit, isActive, isDisplay
-      });
-    }));
-    //マージ
-    data = [...newData, ...data];
-  }
+  const newData = generateWanted(newRawData);
+  data = [...newData, ...data];
+  
   //createAtでソート
   data.sort((a, b) => b.createAt - a.createdAt);
 
