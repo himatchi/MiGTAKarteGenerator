@@ -272,7 +272,6 @@ function overwriteWanted(){
 function switchAutoReloadWanted(){
   const isAutoReloadWanted = document.getElementById('autoReloadWanted').checked;
   if (isAutoReloadWanted){
-    reloadWanted();
     autoReloadTimer = setInterval(reloadWanted, 300000)
   } else {
     clearInterval(autoReloadTimer);
@@ -313,7 +312,8 @@ function loadSettings(){
 
 document.addEventListener('DOMContentLoaded', function() {
   //現在のデータを読み込み
-  reloadWanted();
+  const loadedData = JSON.parse(localStorage.getItem('MiGTAWantedCheckerData'));
+  showWanted(loadedData);
   loadSettings();
   //初期化
   clearWanted();
