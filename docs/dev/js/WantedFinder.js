@@ -237,11 +237,11 @@ function formatDateToDatetimeLocal(date) {
 
 function addWanted(){
   const loadedData = JSON.parse(localStorage.getItem('MiGTAWantedCheckerData'));
-  const id = randomUUID();
-  const createAt = Date.now();
+  const id = Date.now().toString(36) + Math.random().toString(36).substr(2);
+  const createAt = new Date(Date.now());
   const rawText = document.getElementById('wantedDescription').value;
   const name = document.getElementById('wantedName').value;
-  const limit = Date.parse(document.getElementById('wantedTime').value);
+  const limit = new Date(document.getElementById('wantedTime').value);
   const isActive = true;
   const isDisplay = true;
   loadedData.push({
@@ -264,7 +264,7 @@ function overwriteWanted(){
   const selectedIndex = wantedList.selectedIndex;
   loadedData[selectedIndex].rawText = document.getElementById('wantedDescription').value;
   loadedData[selectedIndex].name = document.getElementById('wantedName').value;
-  loadedData[selectedIndex].limit = Date.parse(document.getElementById('wantedTime').value);
+  loadedData[selectedIndex].limit = new Date(document.getElementById('wantedTime').value);
   localStorage.setItem('MiGTAWantedCheckerData', JSON.stringify(loadedData));
   showWanted(loadedData);
 }
