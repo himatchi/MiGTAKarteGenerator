@@ -111,15 +111,16 @@ function generateWanted(rawData){
         const name = match[1] || match[2];
         names.push(name);
       }
-      
+
+      const id = item.id;
+      const createAt = new Date(item.createdAt);
+      const rawText = removeFirstAndLastFour(item.text);
+      const limitMatch = item.text.match(/時間：~ (\d\d\/\d\d \d\d:\d\d)/);
+      const limit = limitMatch ? parseFutureDate(limitMatch[1]) : null;
+      const isActive = true;
+      const isDisplay = true;
+
       names.forEach((name)=>{
-        const id = item.id;
-        const createAt = new Date(item.createdAt);
-        const rawText = removeFirstAndLastFour(item.text);
-        const limitMatch = item.text.match(/時間：~ (\d\d\/\d\d \d\d:\d\d)/);
-        const limit = limitMatch ? parseFutureDate(limitMatch[1]) : null;
-        const isActive = true;
-        const isDisplay = true;
         newData.push({
           id, createAt, rawText, name, limit, isActive, isDisplay
         });
