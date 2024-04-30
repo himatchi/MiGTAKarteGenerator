@@ -287,7 +287,3 @@ function removeFirstAndLastFour(str) {
   // 先頭10文字をスキップし、末尾4文字手前までの部分文字列を取り出す
   return str.slice(10, -4);
 }
-
-function test(){
-
-}
