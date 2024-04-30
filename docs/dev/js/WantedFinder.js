@@ -161,6 +161,9 @@ function refreshWanted(newRawData, oldRawData){
   //createAtでソート
   data.sort((a, b) => b.createAt - a.createdAt);
 
+  //重複している名前があれば、より新しいもののみ残して削除
+  data = removeDuplicatesByProperty(data, 'name');
+
   localStorage.setItem('MiGTAWantedCheckerData', JSON.stringify(data));
   return data;
 }
@@ -282,6 +285,18 @@ function removeFirstAndLastFour(str) {
   }
   // 先頭10文字をスキップし、末尾4文字手前までの部分文字列を取り出す
   return str.slice(10, -4);
+}
+function removeDuplicatesByProperty(array, propName) {
+  const unique = new Map();
+
+  array.forEach(obj => {
+    if (!unique.has(obj[propName])) {
+      unique.set(obj[propName], obj);
+    }
+  });
+
+  // `Map.prototype.values()` で Map の値のみを取得し、配列に変換
+  return Array.from(unique.values());
 }
 
 function switchDisplayWantedChecker(){
