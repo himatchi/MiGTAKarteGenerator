@@ -1,6 +1,7 @@
 /*
 MiGTA Karte Generator is licensed under the MIT License
 Copyright (c) 2024 himatchi
+See also https://github.com/himatchi/MiGTAKarteGenerator/blob/main/LICENSE
 */
 
 var presets = [];
