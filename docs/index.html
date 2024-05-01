@@ -5,6 +5,7 @@
   <!-- Copyright (c) 2024 himatchi -->
 <meta charset="UTF-8">
 <title>カルテジェネレータ</title>
+<script src="js/WantedFinder.js"></script>
 <script src="js/KarteGenerator.js"></script>
 <style>
 @keyframes fadeOut {
@@ -30,7 +31,9 @@
 <body>
 
 <h2>カルテジェネレータ</h2>
-
+<table>
+  <tr>
+  <td>
     <label>治療者:</label>
     <input type="text" id="doctor" placeholder="治療者..." onchange="saveData()"><br>
     <label>日時:</label>
@@ -165,11 +168,32 @@
 <input type="checkbox" id="enableClipboard" onchange="saveData()">
 <label for="enableClipboard">クリップボードに自動コピー</label>
 <br><br>
-
-
 <button onclick="exportData()">エクスポート</button><br>
 <label>インポート：</label>
-<input type="file" id="importData" accept=".json" />
-
+<input type="file" id="importData" accept=".json" /><br><br>
+<button onclick="switchDisplayWantedChecker()">指名手配チェッカー表示/非表示</button>
+</td>
+<td style="vertical-align: top;" id="wantedFinderTd">
+  指名手配メモ<br>
+  <select id="wantedList" size="20" onchange="selecedWantedChanged()"></select>
+  <br>
+  <button onclick="reloadWanted()">更新</button>
+  <button onclick="switchEnableWanted()">有効化/無効化</button>
+  <button onclick="deleteWanted()">削除</button>
+  <input type="checkbox" id="autoReloadWanted" onchange="switchAutoReloadWanted()">
+  <label for="autoReloadWanted">自動更新(5分)</label>
+  <br>
+  <label for="wantedTime">有効期限:</label>
+  <input id="wantedTime" type="datetime-local"><br>
+  <label for="wantedName">指名手配者名:</label>
+  <input id="wantedName" type="text" placeholder="名前" size="50"><br>
+  <textarea id="wantedDescription" rows="10" cols="50"></textarea><br>
+  <button onclick="addWanted()">追加</button>
+  <button onclick="clearWanted()">クリア</button>
+  <button onclick="overwriteWanted()">上書き</button><br>
+  <button onclick="forceReloadWanted()">強制リロード</button>
+</td>
+</tr>
+</table>
 </body>
 </html>
