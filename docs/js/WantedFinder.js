@@ -109,12 +109,12 @@ function generateWanted(rawData){
   if(FilteredRawData && FilteredRawData.length > 0){
     FilteredRawData.forEach((item=>{
       const nameBlockText = item.text.split('時間：')[0];
-      const regex = /「([^」]+)」|- ([^「」\n]+)/gm;
+      const regex = /「([^」]+)」|- ([^「」\n]+)|名前：\n?([^\-\n]+)/gm;
       let match;
       const names = [];
       
       while ((match = regex.exec(nameBlockText)) !== null) {
-        const name = match[1] || match[2];
+        const name = match[1] || match[2] || match[3];
         names.push(name);
       }
 
