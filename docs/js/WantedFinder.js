@@ -192,8 +192,8 @@ function parseFutureDate(timeString) {
   let futureDate = new Date(`${currentYear}/${date} ${time}`);
 
   // 作成した日時が現在時刻より過去であれば、1年加えて未来の日時に修正
-  // ただし24.5時間以上未来の場合は誤判定のためそのまま
-  const oneDaysInMillis = 24.5 * 60 * 60 * 1000; // 24.5時間のミリ秒
+  // ただし24時間以上未来の場合は誤判定のためそのまま
+  const oneDaysInMillis = 24 * 60 * 60 * 1000; // 24時間のミリ秒
   if (futureDate <= now && futureDate - now <= oneDaysInMillis) {
       futureDate.setFullYear(currentYear + 1);
   }
