@@ -167,7 +167,7 @@ function refreshWanted(newRawData, oldRawData){
   //limitとcreateAtが同じ日付の場合は入力ミスの為、limitの値を一日後にする
   data.forEach((item)=>{
     if(new Date(item.createAt).getDate() == new Date(item.limit).getDate()){
-      item.limit = new Date(item.limit).setDate(item.limit.getDate()+1)
+      item.limit = new Date(new Date(item.limit).setDate(item.limit.getDate()+1))
     }
   })
 
