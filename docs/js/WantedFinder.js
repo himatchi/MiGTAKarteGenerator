@@ -164,6 +164,13 @@ function refreshWanted(newRawData, oldRawData){
   const newData = generateWanted(newRawData);
   data = [...newData, ...data];
 
+  //limitとcreateAtが同じ日付の場合は入力ミスの為、limitの値を一日後にする
+  data.forEach((item)=>{
+    if(new Date(item.createAt).getDate() == new Date(item.limit).getDate()){
+      item.limit = new Date(item.limit).setDate(item.limit.getDate()+1)
+    }
+  })
+
   //limitでソート。ただしisDisplayがfalseの場合、末尾へ
   data.sort((a, b) => {
     // isDisplayedがfalseの場合は末尾へ
@@ -229,10 +236,12 @@ function selecedWantedChanged(){
   const loadedData = JSON.parse(localStorage.getItem('MiGTAWantedCheckerData'));
   const wantedList = document.getElementById('wantedList');
   const selectedIndex = wantedList.selectedIndex;
+  const wantedCreateAt = document.getElementById('wantedCreateAt');
   const wantedTime = document.getElementById('wantedTime');
   const wantedName = document.getElementById('wantedName');
   const wantedDescription = document.getElementById('wantedDescription');
   const wanted = loadedData[selectedIndex];
+  wantedCreateAt.value = formatDateToDatetimeLocal(new Date(wanted.createAt));
   wantedTime.value = formatDateToDatetimeLocal(new Date(wanted.limit));
   wantedName.value = wanted.name;
   wantedDescription.value = wanted.rawText;
