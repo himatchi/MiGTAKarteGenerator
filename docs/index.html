@@ -6,26 +6,11 @@
   <!-- See also https://github.com/himatchi/MiGTAKarteGenerator/blob/main/LICENSE -->
 <meta charset="UTF-8">
 <title>カルテジェネレータ</title>
+<link href="css/style.css" rel="stylesheet" />
 <script src="js/WantedFinder.js"></script>
 <script src="js/KarteGenerator.js"></script>
 <style>
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  20% {
-    opacity: 1;
-  }
-  80% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-.fade-out {
-  animation: fadeOut 2.1s;
-}
+
 </style>
 
 </head>
@@ -60,7 +45,7 @@
     </td></tr></table>
     <br>
     <table border="0"><tr><td>
-    <label for="nameSrachBox">患者名:</label><br>
+    <label for="nameSearchBox">患者名:</label><br>
     <input type="text" id="nameSearchBox" placeholder="名前検索..." oninput="nameUpdateSelectOptions()"><br>
     <input type="checkbox" id="disableNameSearch" onchange="toggleDisableNameSearchDescription()">
     <label for="disableNameSearch">直接入力</label><br>
@@ -71,8 +56,8 @@
     <select id="nameResultSelect" size="4"></select>
     </td>
     <td id="multipleNameSelectButton" style="visibility: collapse;">
-      <button onclick="addMultipleName()">追加</button><br>
-      <button onclick="removeMultipleName()">削除</button>
+      <button id="multipleNameSelectAdd" onclick="addMultipleName()">追加</button><br>
+      <button id="multipleNameSelectRemove" onclick="removeMultipleName()">削除</button>
     </td>
     <td id="multipleNameSelectResult" style="visibility: collapse;">
       <select id="multipleNameSelect" size="4"></select>
@@ -146,7 +131,7 @@
     <textarea id="feedback" name="feedback0:46 2024/02/14" cols="50"></textarea><br><br>
 
     <button type="button" onclick="generateText()">文書を生成</button> 
-    <button type="button" onclick="clearInput()">クリア</button>
+    <button id="karteClearButton" type="button" onclick="clearInput()">クリア</button>
 
 
 <button onclick="toggleShowNameDataSource()">名前設定表示/非表示</button>
@@ -194,7 +179,12 @@
   <button onclick="addWanted()">追加</button>
   <button onclick="clearWanted()">クリア</button>
   <button onclick="overwriteWanted()">上書き</button><br>
-  <button onclick="forceReloadWanted()">強制リロード</button>
+  <button onclick="forceReloadWanted()">強制リロード</button><br>
+  <input type="checkbox" id="checkNameRegisterWanted">
+  <label for="checkNameRegisterWanted">指名手配の名前登録状況チェック（患者名検索を空欄にすること）</label><br>
+  <div id="checkNameRegisterWantedResultDiv" hidden>以下は登録されてません：<br>
+    <textarea id="checkNameRegisterWantedResult" rows="10" cols="50" ></textarea>
+  </div>
 </td>
 </tr>
 </table>

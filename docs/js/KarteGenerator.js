@@ -64,8 +64,12 @@ function billingUpdateSelectOptions() {
 
 function toggleShowNameDataSource() {
     const targetDiv = document.getElementById('nameDataSourceDiv');
+    const nameDataSource = document.getElementById('nameDataSource');
     if (targetDiv.hidden == true){
         targetDiv.hidden = false;
+        const len = nameDataSource.value.length;
+        nameDataSource.focus();
+        nameDataSource.setSelectionRange(len,len);
     } else {
         targetDiv.hidden = true;
     }
@@ -74,8 +78,12 @@ function toggleShowNameDataSource() {
 
 function toggleShowLocationDataSource() {
     const targetDiv = document.getElementById('locationDataSourceDiv');
+    const locationDataSource = document.getElementById('locationDataSource');
     if (targetDiv.hidden == true){
         targetDiv.hidden = false;
+        const len = locationDataSource.value.length;
+        locationDataSource.focus();
+        locationDataSource.setSelectionRange(len,len);
     } else {
         targetDiv.hidden = true;
     }
