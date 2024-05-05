@@ -121,13 +121,11 @@ function generateWanted(rawData){
       if (regexCheckMultipleSpaceInLine.exec(nameBlockText) !== null){
         while ((match = regexWithSeparatedBySpace.exec(nameBlockText)) !== null) {
           const name = match[1] || match[2] || match[3] || match[4] || match[5];
-          console.log('path1:' + name);
           names.push(name);
         }
       } else {
         while ((match = regex.exec(nameBlockText)) !== null) {
           const name = match[1] || match[2] || match[3] || match[4];
-          console.log('path2:' + name);
           names.push(name);
         }
       }
@@ -230,22 +228,23 @@ function parseFutureDate(timeString) {
 function switchEnableWanted(){
   const loadedData = JSON.parse(localStorage.getItem('MiGTAWantedCheckerData'));
   const wantedList = document.getElementById('wantedList');
-  const selectedIndex = wantedList.value;
-  const selectedIndexTmp = wantedList.selectedIndex;
+  const selectedListIndex = wantedList.value;
+  const selectedIndex = wantedList.selectedIndex;
   if(selectedIndex != -1){
-    loadedData[selectedIndex].isActive = !loadedData[selectedIndex].isActive;
+    loadedData[selectedListIndex].isActive = !loadedData[selectedListIndex].isActive;
     localStorage.setItem('MiGTAWantedCheckerData', JSON.stringify(loadedData));
     showWanted(loadedData);
-    wantedList.selectedIndex = selectedIndexTmp;
+    wantedList.selectedIndex = selectedIndex;
   }
 }
 
 function deleteWanted(){
   const loadedData = JSON.parse(localStorage.getItem('MiGTAWantedCheckerData'));
   const wantedList = document.getElementById('wantedList');
-  const selectedIndex = wantedList.value;
+  const selectedListIndex = wantedList.value;
+  const selectedIndex = wantedList.selectedIndex;
   if(selectedIndex != -1){
-    loadedData[selectedIndex].isDisplay = false;
+    loadedData[selectedListIndex].isDisplay = false;
     localStorage.setItem('MiGTAWantedCheckerData', JSON.stringify(loadedData));
     showWanted(loadedData);
   }
@@ -260,12 +259,12 @@ function forceReloadWanted(){
 function selecedWantedChanged(){
   const loadedData = JSON.parse(localStorage.getItem('MiGTAWantedCheckerData'));
   const wantedList = document.getElementById('wantedList');
-  const selectedIndex = wantedList.value;
+  const selectedListIndex = wantedList.value;
   const wantedCreateAt = document.getElementById('wantedCreateAt');
   const wantedTime = document.getElementById('wantedTime');
   const wantedName = document.getElementById('wantedName');
   const wantedDescription = document.getElementById('wantedDescription');
-  const wanted = loadedData[selectedIndex];
+  const wanted = loadedData[selectedListIndex];
   wantedCreateAt.value = formatDateToDatetimeLocal(new Date(wanted.createAt));
   wantedTime.value = formatDateToDatetimeLocal(new Date(wanted.limit));
   wantedName.value = wanted.name;
@@ -310,11 +309,12 @@ function clearWanted(){
 function overwriteWanted(){
   const loadedData = JSON.parse(localStorage.getItem('MiGTAWantedCheckerData'));
   const wantedList = document.getElementById('wantedList');
-  const selectedIndex = wantedList.value;
+  const selectedListIndex = wantedList.value;
+  const selectedIndex = wantedList.selectedIndex;
   if(selectedIndex != -1){
-    loadedData[selectedIndex].rawText = document.getElementById('wantedDescription').value;
-    loadedData[selectedIndex].name = document.getElementById('wantedName').value;
-    loadedData[selectedIndex].limit = new Date(document.getElementById('wantedTime').value);
+    loadedData[selectedListIndex].rawText = document.getElementById('wantedDescription').value;
+    loadedData[selectedListIndex].name = document.getElementById('wantedName').value;
+    loadedData[selectedListIndex].limit = new Date(document.getElementById('wantedTime').value);
     localStorage.setItem('MiGTAWantedCheckerData', JSON.stringify(loadedData));
     showWanted(loadedData);
   }
