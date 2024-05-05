@@ -110,14 +110,26 @@ function generateWanted(rawData){
   let newData = [];
   if(FilteredRawData && FilteredRawData.length > 0){
     FilteredRawData.forEach((item=>{
-      const nameBlockText = item.text.split('時間：')[0];
+      const tmpText = item.text.split('時間：')[0];
+      const nameBlockText = tmpText.split('=')[2];
       const regex = /「([^\/」]+)」|- ([^\/「」\n]+)|名前：\n?([^\/\-\n]+)|\/ ?([^\/\-\n]+)/gm;
+      const regexWithSeparatedBySpace = /「([^\/」]+)」|- ([^ 　\/「」\n]+[ 　]?[^ 　\/「」\n]*)|名前：\n?([^ 　\/\-\n]+[ 　]?[^ 　\/\-\n]*)|\/[ 　]?([^\/\-\n]+)|[ 　]([^\s\/「」\n]+[ 　][^ 　\/「」\n]*)/gm;
       let match;
       const names = [];
       
-      while ((match = regex.exec(nameBlockText)) !== null) {
-        const name = match[1] || match[2] || match[3] || match[4];
-        names.push(name);
+      const regexCheckMultipleSpaceInLine = /^(?!.*[\/「]).*(?:(?<![-：])[ 　].*){2,}$/gm;
+      if (regexCheckMultipleSpaceInLine.exec(nameBlockText) !== null){
+        while ((match = regexWithSeparatedBySpace.exec(nameBlockText)) !== null) {
+          const name = match[1] || match[2] || match[3] || match[4] || match[5];
+          console.log('path1:' + name);
+          names.push(name);
+        }
+      } else {
+        while ((match = regex.exec(nameBlockText)) !== null) {
+          const name = match[1] || match[2] || match[3] || match[4];
+          console.log('path2:' + name);
+          names.push(name);
+        }
       }
 
       const id = item.id;
