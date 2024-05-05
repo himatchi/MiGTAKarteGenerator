@@ -112,7 +112,7 @@ function generateWanted(rawData){
     FilteredRawData.forEach((item=>{
       const tmpText = item.text.split('時間：')[0];
       const nameBlockText = tmpText.split('=')[2];
-      const regex = /「([^\/」]+)」|- ([^\/「」\n]+)|名前：\n?([^\/\-\n]+)|\/ ?([^\/\-\n]+)/gm;
+      const regex = /「([^\/」]+)」|- ([^\/「」\n]+)|名前：\n? ?([^\s\/\-\n][^\/\-\n]*)|\/ ?([^\/\-\n]+)/gm;
       const regexWithSeparatedBySpace = /「([^\/」]+)」|- ([^ 　\/「」\n]+[ 　]?[^ 　\/「」\n]*)|名前：\n?([^ 　\/\-\n]+[ 　]?[^ 　\/\-\n]*)|\/[ 　]?([^\/\-\n]+)|[ 　]([^\s\/「」\n]+[ 　][^ 　\/「」\n]*)/gm;
       let match;
       const names = [];
@@ -416,6 +416,9 @@ function highlightWanted(){
     }
 
     for (let i = 0; i < loadedData.length; i++){
+      if (loadedData[i].isActive == false){
+        continue;
+      }
       if (selectedValue.has(normalizeString(loadedData[i].name))){
         wantedOptions[i].classList.add('highlightedWanted');
       }else {
@@ -439,4 +442,5 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('multipleNameSelectRemove').addEventListener('click',(event)=>{highlightWanted()});
   document.getElementById('karteClearButton').addEventListener('click',(event)=>{highlightWanted()});
   document.getElementById('checkNameRegisterWanted').addEventListener('change',(event)=>{highlightWanted()});
+  document.getElementById('switchEnableWantedButton').addEventListener('click',(event)=>{highlightWanted()});
 });
