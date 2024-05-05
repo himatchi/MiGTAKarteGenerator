@@ -121,8 +121,8 @@ function generateWanted(rawData){
       const id = item.id;
       const createAt = new Date(item.createdAt);
       const rawText = removeFirstAndLastFour(item.text);
-      const limitMatch = item.text.match(/時間：~ (\d\d\/\d\d \d\d:\d\d)/);
-      const limit = limitMatch ? parseFutureDate(limitMatch[1]) : null;
+      const limitMatch = item.text.match(/時間：~ (\d?\d)\/(\d?\d)\s+(\d\d:\d\d)/);
+      const limit = limitMatch ? parseFutureDate(limitMatch[1].padStart(2, '0') + '/' + limitMatch[2].padStart(2, '0') + ' ' + limitMatch[3]) : null;
       const isActive = true;
       const isDisplay = true;
 
@@ -171,18 +171,24 @@ function refreshWanted(newRawData, oldRawData){
     }
   })
 
-  //limitでソート。ただしisDisplayがfalseの場合、末尾へ
+  //createAtでソート。ただしisDisplayがfalseの場合、末尾へ
   data.sort((a, b) => {
     // isDisplayedがfalseの場合は末尾へ
     if (a.isDisplay !== b.isDisplay) {
       return a.isDisplay ? -1 : 1;
     }
-    // isDisplayedが同じ場合はlimitで降順ソート
-    return Date.parse(b.limit) - Date.parse(a.limit)
+    // isDisplayedが同じ場合はcreateAtで降順ソート
+    return Date.parse(b.createAt) - Date.parse(a.createAt);
   });
 
   //重複している名前があれば、より新しいもののみ残して削除
   data = removeDuplicatesByProperty(data, 'name');
+
+  //limitでソート
+  data.sort((a, b) => {
+    // limitで降順ソート
+    return Date.parse(b.limit) - Date.parse(a.limit);
+  });
 
   localStorage.setItem('MiGTAWantedCheckerData', JSON.stringify(data));
   return data;
