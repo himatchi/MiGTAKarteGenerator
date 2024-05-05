@@ -80,7 +80,8 @@ function showWanted(wantedData){
   const wantedList = document.getElementById('wantedList');
   wantedList.innerHTML = '';
   if(wantedData && wantedData.length > 0){
-    wantedData.forEach((item)=>{
+    for(let i = 0; i < wantedData.length; i++){
+      const item = wantedData[i];
       if(item.isDisplay){
         const option = document.createElement('option');
         const limit = new Date(item.limit).toLocaleString('ja-JP', {
@@ -91,12 +92,13 @@ function showWanted(wantedData){
           minute: '2-digit'
         });
         option.text = `～${limit} - ${item.name}`
+        option.value = i;
         if(item.isActive == false){
           option.style="text-decoration: line-through;";
         }
         wantedList.add(option);
       }
-    });
+    }
   }
   return;
 }
@@ -216,20 +218,25 @@ function parseFutureDate(timeString) {
 function switchEnableWanted(){
   const loadedData = JSON.parse(localStorage.getItem('MiGTAWantedCheckerData'));
   const wantedList = document.getElementById('wantedList');
-  const selectedIndex = wantedList.selectedIndex;
-  loadedData[selectedIndex].isActive = !loadedData[selectedIndex].isActive;
-  localStorage.setItem('MiGTAWantedCheckerData', JSON.stringify(loadedData));
-  showWanted(loadedData);
-  wantedList.selectedIndex = selectedIndex;
+  const selectedIndex = wantedList.value;
+  const selectedIndexTmp = wantedList.selectedIndex;
+  if(selectedIndex != -1){
+    loadedData[selectedIndex].isActive = !loadedData[selectedIndex].isActive;
+    localStorage.setItem('MiGTAWantedCheckerData', JSON.stringify(loadedData));
+    showWanted(loadedData);
+    wantedList.selectedIndex = selectedIndexTmp;
+  }
 }
 
 function deleteWanted(){
   const loadedData = JSON.parse(localStorage.getItem('MiGTAWantedCheckerData'));
   const wantedList = document.getElementById('wantedList');
-  const selectedIndex = wantedList.selectedIndex;
-  loadedData[selectedIndex].isDisplay = false;
-  localStorage.setItem('MiGTAWantedCheckerData', JSON.stringify(loadedData));
-  showWanted(loadedData);
+  const selectedIndex = wantedList.value;
+  if(selectedIndex != -1){
+    loadedData[selectedIndex].isDisplay = false;
+    localStorage.setItem('MiGTAWantedCheckerData', JSON.stringify(loadedData));
+    showWanted(loadedData);
+  }
 }
 
 function forceReloadWanted(){
@@ -241,7 +248,7 @@ function forceReloadWanted(){
 function selecedWantedChanged(){
   const loadedData = JSON.parse(localStorage.getItem('MiGTAWantedCheckerData'));
   const wantedList = document.getElementById('wantedList');
-  const selectedIndex = wantedList.selectedIndex;
+  const selectedIndex = wantedList.value;
   const wantedCreateAt = document.getElementById('wantedCreateAt');
   const wantedTime = document.getElementById('wantedTime');
   const wantedName = document.getElementById('wantedName');
@@ -291,12 +298,14 @@ function clearWanted(){
 function overwriteWanted(){
   const loadedData = JSON.parse(localStorage.getItem('MiGTAWantedCheckerData'));
   const wantedList = document.getElementById('wantedList');
-  const selectedIndex = wantedList.selectedIndex;
-  loadedData[selectedIndex].rawText = document.getElementById('wantedDescription').value;
-  loadedData[selectedIndex].name = document.getElementById('wantedName').value;
-  loadedData[selectedIndex].limit = new Date(document.getElementById('wantedTime').value);
-  localStorage.setItem('MiGTAWantedCheckerData', JSON.stringify(loadedData));
-  showWanted(loadedData);
+  const selectedIndex = wantedList.value;
+  if(selectedIndex != -1){
+    loadedData[selectedIndex].rawText = document.getElementById('wantedDescription').value;
+    loadedData[selectedIndex].name = document.getElementById('wantedName').value;
+    loadedData[selectedIndex].limit = new Date(document.getElementById('wantedTime').value);
+    localStorage.setItem('MiGTAWantedCheckerData', JSON.stringify(loadedData));
+    showWanted(loadedData);
+  }
 }
 
 function switchAutoReloadWanted(){
