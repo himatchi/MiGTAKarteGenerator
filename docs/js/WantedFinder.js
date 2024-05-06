@@ -101,7 +101,6 @@ function showWanted(wantedData){
     }
   }
   wantedList.size = wantedList.length > 20 ? wantedList.length : 20;
-  console.log(wantedList.length);
   return;
 }
 
