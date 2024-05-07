@@ -114,7 +114,7 @@ function generateWanted(rawData){
       const tmpText = item.text.split('時間：')[0];
       const nameBlockText = tmpText.split('=')[2];
       const regex = /「([^\/」]+)」|- ([^\/「」\n]+)|名前：\n? ?([^\s\/\-\n][^\/\-\n]*)|\/ ?([^\/\-\n]+)/gm;
-      const regexWithSeparatedBySpace = /「([^\/」]+)」|- ([^ 　\/「」\n]+[ 　]?[^ 　\/「」\n]*)|名前：\n?([^ 　\/\-\n]+[ 　]?[^ 　\/\-\n]*)|\/[ 　]?([^\/\-\n]+)|[ 　]([^\s\/「」\n]+[ 　][^ 　\/「」\n]*)/gm;
+      const regexWithSeparatedBySpace = /「([^\/」]+)」|- ([^ 　\/「」\n]+ ?[^ 　\/「」\n]*)|名前：\n?([^ 　\/\-\n]+ ?[^ 　\/\-\n]*)|\/ ?([^\/\-\n]+)|　([^\s\/「」\n]+ ?[^ 　\/「」\n]*)/gm;
       let match;
       const names = [];
       
