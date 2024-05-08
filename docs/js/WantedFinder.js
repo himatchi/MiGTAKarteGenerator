@@ -1,4 +1,4 @@
-/*
+  /*
 MiGTA Karte Generator is licensed under the MIT License
 Copyright (c) 2024 himatchi
 See also https://github.com/himatchi/MiGTAKarteGenerator/blob/main/LICENSE
@@ -134,7 +134,7 @@ function generateWanted(rawData){
       const id = item.id;
       const createAt = new Date(item.createdAt);
       const rawText = removeFirstAndLastFour(item.text);
-      const limitMatch = item.text.match(/時間：~ (\d?\d)\/(\d?\d)\s+(\d?\d:\d\d)/);
+      const limitMatch = item.text.match(/時間：~? ?(\d?\d)\/(\d?\d)\s+(\d?\d:\d\d)/);
       const limit = limitMatch ? parseFutureDate(limitMatch[1].padStart(2, '0') + '/' + limitMatch[2].padStart(2, '0') + ' ' + limitMatch[3].padStart(5,'0')) : null;
       const isActive = true;
       const isDisplay = true;
