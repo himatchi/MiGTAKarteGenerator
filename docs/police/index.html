@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- MiGTA Karte Generator is licensed under the MIT License -->
+  <!-- Copyright (c) 2024 himatchi -->
+  <!-- See also https://github.com/himatchi/MiGTAKarteGenerator/blob/main/LICENSE -->
+<meta charset="UTF-8">
+<title>指名手配チェッカー</title>
+<script src="../js/WantedFinder.js"></script>
+</head>
+<body>
+<h2>指名手配チェッカー</h2>
+  <select id="wantedList" size="20" onchange="selecedWantedChanged()"></select>
+  <br>
+  <button onclick="reloadWanted()">更新</button>
+  <button id="switchEnableWantedButton" onclick="switchEnableWanted()">有効化/無効化</button>
+  <button onclick="deleteWanted()">削除</button>
+  <input type="checkbox" id="autoReloadWanted" onchange="switchAutoReloadWanted()">
+  <label for="autoReloadWanted">自動更新(5分)</label>
+  <br>
+  <label for="wantedCreateAt">作成時刻:</label>
+  <input id="wantedCreateAt" type="datetime-local" readonly><br>
+  <label for="wantedTime">有効期限:</label>
+  <input id="wantedTime" type="datetime-local"><br>
+  <label for="wantedName">指名手配者名:</label>
+  <input id="wantedName" type="text" placeholder="名前" size="50"><br>
+  <textarea id="wantedDescription" rows="10" cols="50"></textarea><br>
+  <button onclick="addWanted()">追加</button>
+  <button onclick="clearWanted()">クリア</button>
+  <button onclick="overwriteWanted()">上書き</button><br>
+  <button onclick="forceReloadWanted()">強制リロード</button><br>
+</body>
+</html>
