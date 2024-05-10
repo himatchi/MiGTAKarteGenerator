@@ -112,8 +112,9 @@ function generateWanted(rawData){
   if(FilteredRawData && FilteredRawData.length > 0){
     FilteredRawData.forEach((item=>{
       const tmpText = item.text.split('時間：')[0];
-      const nameBlockText = tmpText.split('=')[2];
-      const regex = /「([^\/」]+)」|- ([^\/「」\n]+)|名前：\n? ?([^\s\/\-\n][^\/\-\n]*)|\/ ?([^\/\-\n]+)/gm;
+      const tmpText2 = tmpText.split('罪状：')[0];
+      const nameBlockText = tmpText2.split('=')[2];
+      const regex = /「([^\/」、]+)」|- ([^\/「」\n、]+)|名前：\n? ?([^\s\/\-\n、][^\/\-\n、]*)|\/ ?([^\/\-\n、]+)|、 ?([^\/\-\n、]+)/gm;
       const regexWithSeparatedBySpace = /「([^\/」]+)」|- ([^ 　\/「」\n]+ ?[^ 　\/「」\n]*)|名前：\n?([^ 　\/\-\n]+ ?[^ 　\/\-\n]*)|\/ ?([^\/\-\n]+)|　([^\s\/「」\n]+ ?[^ 　\/「」\n]*)/gm;
       let match;
       const names = [];
@@ -126,7 +127,7 @@ function generateWanted(rawData){
         }
       } else {
         while ((match = regex.exec(nameBlockText)) !== null) {
-          const name = match[1] || match[2] || match[3] || match[4];
+          const name = match[1] || match[2] || match[3] || match[4] || match[5];
           names.push(name);
         }
       }
@@ -177,7 +178,7 @@ function refreshWanted(newRawData, oldRawData){
   const newData = generateWanted(newRawData);
   data = [...newData, ...data];
 
-  //limitとcreateAtが同じ日付の場合は入力ミスの為、limitの値を一日後にする
+  //limitとcreateAtが同じ日付の場合は入力ミスの為、limitの値を一日後にする。
   data.forEach((item)=>{
     if(new Date(item.createAt).getDate() == new Date(item.limit).getDate()){
       item.limit = new Date(new Date(item.limit).setDate(new Date(item.limit).getDate()+1))
