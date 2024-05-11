@@ -218,6 +218,7 @@ function refreshWanted(newRawData, oldRawData){
       const normalizedWantedName = normalizeString(wanted.name);
       const wantedcreatedAt = new Date(wanted.createdAt);
       if(normalizedCatchedWantedText.includes(normalizedWantedName) && catchedWantedcreatedAt > wantedcreatedAt){
+        console.log(wanted);
         wanted.isActive = false;
       }
     });
