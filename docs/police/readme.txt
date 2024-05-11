@@ -59,10 +59,16 @@ misskey.ioへの負荷が高いため、常用は推奨しません。
 無効化した指名手配者や削除した指名手配者が
 復活します。
 
-### 4. 問い合わせ先 ###
+### 4. 変更履歴 ###
+5/11
+Birdyの@lspdアカウントで「確保」を含むつぶやきをした場合
+その中に指名手配者の名前がないか確認し、一致した場合は
+自動的に無効化する機能を追加しました。
+
+### 5. 問い合わせ先 ###
 MiGTA 救急隊 槌谷ひま
 
-### 5. ライセンス表示 ###
+### 6. ライセンス表示 ###
 MiGTA Karte Generator is licensed under the MIT License
 Copyright (c) 2024 himatchi
 See also https://github.com/himatchi/MiGTAKarteGenerator/blob/main/LICENSE
