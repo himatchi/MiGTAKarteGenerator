@@ -210,11 +210,14 @@ function refreshWanted(newRawData, oldRawData){
   //確保を含むつぶやきのみを抽出
   const catchedWantedRawData = policeTweetRawData.filter(item => item.text.includes('確保'));
   //確保を含むつぶやきを正規化し、同じく正規化した指名手配者の名前が入っているか確認。入っている場合は無効化
+  //ただしcreateAtを比較して、確保より古い指名手配情報のみ無効化！
   catchedWantedRawData.forEach(catchedWanted => {
     const normalizedCatchedWantedText = normalizeString(catchedWanted.text);
+    const CatchedWantedCreateAt = new Date(catchedWanted.createAt);
     data.forEach(wanted => {
       const normalizedWantedName = normalizeString(wanted.name);
-      if(normalizedCatchedWantedText.includes(normalizedWantedName)){
+      const wantedCreateAt = new Date(wanted.createAt);
+      if(normalizedCatchedWantedText.includes(normalizedWantedName) && CatchedWantedCreateAt > wantedCreateAt){
         wanted.isActive = false;
       }
     });
