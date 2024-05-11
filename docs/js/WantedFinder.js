@@ -198,10 +198,26 @@ function refreshWanted(newRawData, oldRawData){
   //重複している名前があれば、より新しいもののみ残して削除
   data = removeDuplicatesByProperty(data, 'name');
 
-  //limitでソート
+  //limitで降順ソート
   data.sort((a, b) => {
-    // limitで降順ソート
     return Date.parse(b.limit) - Date.parse(a.limit);
+  });
+
+  //確保済みの容疑者がいる場合、それを無効化する。
+  const murgedRawData = [...newRawData, ...oldRawData];
+  //まずは警察のつぶやきのみを抽出
+  const policeTweetRawData = murgedRawData.filter(item => item.text.includes('\n@lspd\n'));
+  //確保を含むつぶやきのみを抽出
+  const catchedWantedRawData = policeTweetRawData.filter(item => item.text.includes('確保'));
+  //確保を含むつぶやきを正規化し、同じく正規化した指名手配者の名前が入っているか確認。入っている場合は無効化
+  catchedWantedRawData.forEach(catchedWanted => {
+    const normalizedCatchedWantedText = normalizeString(catchedWanted.text);
+    data.forEach(wanted => {
+      const normalizedWantedName = normalizeString(wanted.name);
+      if(normalizedCatchedWantedText.includes(normalizedWantedName)){
+        wanted.isActive = false;
+      }
+    });
   });
 
   localStorage.setItem('MiGTAWantedCheckerData', JSON.stringify(data));
