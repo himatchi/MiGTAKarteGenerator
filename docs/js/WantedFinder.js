@@ -133,7 +133,7 @@ function generateWanted(rawData){
       }
 
       const id = item.id;
-      const createAt = new Date(item.createdAt);
+      const createdAt = new Date(item.createdAt);
       const rawText = removeFirstAndLastFour(item.text);
       const limitMatch = item.text.match(/時間：~? ?(\d?\d)\/(\d?\d)\s+(\d?\d:\d\d)/);
       const limit = limitMatch ? parseFutureDate(limitMatch[1].padStart(2, '0') + '/' + limitMatch[2].padStart(2, '0') + ' ' + limitMatch[3].padStart(5,'0')) : null;
@@ -142,7 +142,7 @@ function generateWanted(rawData){
 
       names.forEach((name)=>{
         newData.push({
-          id, createAt, rawText, name, limit, isActive, isDisplay
+          id, createdAt, rawText, name, limit, isActive, isDisplay
         });
       });
     }));
@@ -178,21 +178,21 @@ function refreshWanted(newRawData, oldRawData){
   const newData = generateWanted(newRawData);
   data = [...newData, ...data];
 /*
-  //limitとcreateAtが同じ日付の場合は入力ミスの為、limitの値を一日後にする。
+  //limitとcreatedAtが同じ日付の場合は入力ミスの為、limitの値を一日後にする。
   data.forEach((item)=>{
-    if(new Date(item.createAt).getDate() == new Date(item.limit).getDate()){
+    if(new Date(item.createdAt).getDate() == new Date(item.limit).getDate()){
       item.limit = new Date(new Date(item.limit).setDate(new Date(item.limit).getDate()+1))
     }
   })
 */
-  //createAtでソート。ただしisDisplayがfalseの場合、末尾へ
+  //createdAtでソート。ただしisDisplayがfalseの場合、末尾へ
   data.sort((a, b) => {
     // isDisplayedがfalseの場合は末尾へ
     if (a.isDisplay !== b.isDisplay) {
       return a.isDisplay ? -1 : 1;
     }
-    // isDisplayedが同じ場合はcreateAtで降順ソート
-    return Date.parse(b.createAt) - Date.parse(a.createAt);
+    // isDisplayedが同じ場合はcreatedAtで降順ソート
+    return Date.parse(b.createdAt) - Date.parse(a.createdAt);
   });
 
   //重複している名前があれば、より新しいもののみ残して削除
@@ -210,14 +210,14 @@ function refreshWanted(newRawData, oldRawData){
   //確保を含むつぶやきのみを抽出
   const catchedWantedRawData = policeTweetRawData.filter(item => item.text.includes('確保'));
   //確保を含むつぶやきを正規化し、同じく正規化した指名手配者の名前が入っているか確認。入っている場合は無効化
-  //ただしcreateAtを比較して、確保より古い指名手配情報のみ無効化！
+  //ただしcreatedAtを比較して、確保より古い指名手配情報のみ無効化！
   catchedWantedRawData.forEach(catchedWanted => {
     const normalizedCatchedWantedText = normalizeString(catchedWanted.text);
-    const CatchedWantedCreateAt = new Date(catchedWanted.createAt);
+    const catchedWantedcreatedAt = new Date(catchedWanted.createdAt);
     data.forEach(wanted => {
       const normalizedWantedName = normalizeString(wanted.name);
-      const wantedCreateAt = new Date(wanted.createAt);
-      if(normalizedCatchedWantedText.includes(normalizedWantedName) && CatchedWantedCreateAt > wantedCreateAt){
+      const wantedcreatedAt = new Date(wanted.createdAt);
+      if(normalizedCatchedWantedText.includes(normalizedWantedName) && catchedWantedcreatedAt > wantedcreatedAt){
         wanted.isActive = false;
       }
     });
@@ -281,12 +281,12 @@ function selecedWantedChanged(){
   const loadedData = JSON.parse(localStorage.getItem('MiGTAWantedCheckerData'));
   const wantedList = document.getElementById('wantedList');
   const selectedListIndex = wantedList.value;
-  const wantedCreateAt = document.getElementById('wantedCreateAt');
+  const wantedcreatedAt = document.getElementById('wantedcreatedAt');
   const wantedTime = document.getElementById('wantedTime');
   const wantedName = document.getElementById('wantedName');
   const wantedDescription = document.getElementById('wantedDescription');
   const wanted = loadedData[selectedListIndex];
-  wantedCreateAt.value = formatDateToDatetimeLocal(new Date(wanted.createAt));
+  wantedcreatedAt.value = formatDateToDatetimeLocal(new Date(wanted.createdAt));
   wantedTime.value = formatDateToDatetimeLocal(new Date(wanted.limit));
   wantedName.value = wanted.name;
   wantedDescription.value = wanted.rawText;
@@ -305,14 +305,14 @@ function formatDateToDatetimeLocal(date) {
 function addWanted(){
   const loadedData = JSON.parse(localStorage.getItem('MiGTAWantedCheckerData'));
   const id = Date.now().toString(36) + Math.random().toString(36).substr(2);
-  const createAt = new Date(Date.now());
+  const createdAt = new Date(Date.now());
   const rawText = document.getElementById('wantedDescription').value;
   const name = document.getElementById('wantedName').value;
   const limit = new Date(document.getElementById('wantedTime').value);
   const isActive = true;
   const isDisplay = true;
   loadedData.push({
-    id, createAt, rawText, name, limit, isActive, isDisplay
+    id, createdAt, rawText, name, limit, isActive, isDisplay
   });
   //limitでソート
   loadedData.sort((a, b) => Date.parse(b.limit) - Date.parse(a.limit));
