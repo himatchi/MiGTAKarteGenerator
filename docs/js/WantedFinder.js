@@ -21,7 +21,10 @@ async function reloadWanted(){
     });
   }
   const newData = await fetchWanted(data, undefined);
-  localStorage.setItem('MiGTAWantedCheckerRawData', JSON.stringify([...newData, ...data]));
+  const murgedData = [...newData, ...data];
+  const storedData = murgedData.length > 1000 ? murgedData.slice(0, 1000) : murgedData;
+
+  localStorage.setItem('MiGTAWantedCheckerRawData', JSON.stringify(storedData));
   const wantedData = refreshWanted(newData, data);
   showWanted(wantedData);
   return;
