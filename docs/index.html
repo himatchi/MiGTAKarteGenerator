@@ -133,11 +133,13 @@
     </select><br><br>
 
     <label for="remarks">備考：</label>
-    <textarea id="remarks" name="remarks" cols="50"></textarea><br><br>
-
-    <label for="feedback">感想：</label>
-    <textarea id="feedback" name="feedback0:46 2024/02/14" cols="50"></textarea><br><br>
-
+    <textarea id="remarks" name="remarks" cols="50"></textarea>
+    <br><br>
+    <div id="divFeedback">
+      <label for="feedback">感想：</label>
+      <textarea id="feedback" name="feedback" cols="50"></textarea>
+      <br><br>
+    </div>
     <button type="button" onclick="generateText()">文書を生成</button> 
     <button id="karteClearButton" type="button" onclick="clearInput()">クリア</button>
 
@@ -161,6 +163,9 @@
 <br>
 <input type="checkbox" id="enableClipboard" onchange="saveData()">
 <label for="enableClipboard">クリップボードに自動コピー</label>
+<br>
+<input type="checkbox" id="disableFeedback" onchange="toggleShowFeedback(); saveData()">
+<label for="disableFeedback">感想を無効化</label>
 <br><br>
 <button onclick="exportData()">エクスポート</button><br>
 <label>インポート：</label>

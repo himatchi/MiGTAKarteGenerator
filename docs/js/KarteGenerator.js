@@ -255,8 +255,14 @@ function generateText() {
     } else {
         actionText = actionText + "医療キットによる治療を実施";
     }
+    let generatedText = '';
+    generatedText = `Date：${dateString}\nName：${name}\n怪我の場所：${location}\n治療の場所：${cureLocation}\n症状：${symptomsText}\n治療者：${doctor}\n対処：${actionText}\n請求：${billing}\n備考：${remarks}`;
 
-    const generatedText = `Date：${dateString}\nName：${name}\n怪我の場所：${location}\n治療の場所：${cureLocation}\n症状：${symptomsText}\n治療者：${doctor}\n対処：${actionText}\n請求：${billing}\n備考：${remarks}\n感想「${feedback}」`;
+    const isDisableFeedback = document.getElementById('disableFeedback').checked;
+    console.log(isDisableFeedback);
+    if (isDisableFeedback == false){
+        generatedText = generatedText + `\n感想「${feedback}」`;
+    }
 
     document.getElementById('outputText').value = generatedText;
     document.getElementById('nameDataSourceDiv').hidden = true;
@@ -295,11 +301,12 @@ function clearInput() {
     document.getElementById('cureLocationMainHospital').checked = true;
     document.getElementById('cureLocationText').value = "";
     document.getElementById('presetName').value = "";
-    toggleMultipleNameSelect()
-    nameUpdateSelectOptions()
-    locationUpdateSelectOptions()
-    billingUpdateSelectOptions()
-    presetUpdateSelectOptions()
+    toggleMultipleNameSelect();
+    toggleShowFeedback();
+    nameUpdateSelectOptions();
+    locationUpdateSelectOptions();
+    billingUpdateSelectOptions();
+    presetUpdateSelectOptions();
 }
 
 function saveData() {
@@ -308,7 +315,8 @@ function saveData() {
     const locationDataSource = document.getElementById('locationDataSource').value;
     const enableClipboard = document.getElementById('enableClipboard').checked;
     const autoPresetApply = document.getElementById('autoPresetApply').checked;
-    const data = { doctor, nameDataSource, locationDataSource, enableClipboard, autoPresetApply, presets};
+    const isDisableFeedback = document.getElementById('disableFeedback').checked;
+    const data = { doctor, nameDataSource, locationDataSource, enableClipboard, autoPresetApply, isDisableFeedback, presets};
 
     localStorage.setItem('MiGTAKarteGeneratorData', JSON.stringify(data));
 }
@@ -322,6 +330,7 @@ function loadData() {
         document.getElementById('locationDataSource').value = data.locationDataSource ? data.locationDataSource : "";
         document.getElementById('enableClipboard').checked = data.enableClipboard ? data.enableClipboard : false;
         document.getElementById('autoPresetApply').checked = data.autoPresetApply ? data.autoPresetApply : false;
+        document.getElementById('disableFeedback').checked = data.isDisableFeedback ? data.isDisableFeedback : false;
         presets = data.presets ? data.presets : [];
     }
 }
@@ -641,6 +650,12 @@ function highlightWanted(){
     return;
   }
   
+  function toggleShowFeedback(){
+    const divFeedback = document.getElementById('divFeedback');
+    const disableFeedback = document.getElementById('disableFeedback');
+    divFeedback.hidden = disableFeedback.checked;
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('nameSearchBox').addEventListener('input',(event)=>{highlightWanted()});
     document.getElementById('multipleNameSelectAdd').addEventListener('click',(event)=>{highlightWanted()});
