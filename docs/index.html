@@ -82,7 +82,6 @@
 
     <form>
     <div>治療場所:
-
         <input type="radio" id="cureLocationSamePlace" name="cureLocation" value="samePlace">
         <label for="cureLocationSamePlace">現場</label>
         <input type="radio" id="cureLocationMainHospital" name="cureLocation" value="mainHospital" checked >
@@ -91,11 +90,20 @@
         <label for="cureLocationNorthHospital">北病院</label>
         <input type="radio" id="cureLocationUserInput" name="cureLocation" value="userInput">
         <label for="cureLocationUserInput">任意入力</label>
-        <input type="text" id="cureLocationText" placeholder="治療場所...">
+        <input type="text" id="cureLocationText" placeholder="治療場所..."><br>
+        　↳留置所：
+        <input type="radio" id="cureLocationMainJail" name="cureLocation" value="mainJail">
+        <label for="cureLocationMainJail">本署</label>
+        <input type="radio" id="cureLocationSouthJail" name="cureLocation" value="southJail">
+        <label for="cureLocationSouthJail">南署</label>
+        <input type="radio" id="cureLocationEastJail" name="cureLocation" value="eastJail">
+        <label for="cureLocationEastJail">東署</label>
+        <input type="radio" id="cureLocationNorthJail" name="cureLocation" value="northJail">
+        <label for="cureLocationNorthJail">北署</label>
+        <input type="radio" id="cureLocationDesertJail" name="cureLocation" value="desertJail">
+        <label for="cureLocationDesertJail">砂漠署</label>
     </div>
     </form>
-
-    <br>
 
     <label>症状：</label><br>
     <input type="checkbox" id="symptomA" name="symptom" value="打撲">

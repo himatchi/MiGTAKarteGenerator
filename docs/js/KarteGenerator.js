@@ -195,6 +195,11 @@ function generateText() {
     const cureLocationMainHospital = document.getElementById('cureLocationMainHospital').checked;
     const cureLocationNorthHospital = document.getElementById('cureLocationNorthHospital').checked;
     const cureLocationUserInput = document.getElementById('cureLocationUserInput').checked;
+    const cureLocationMainJail = document.getElementById('cureLocationMainJail').checked;
+    const cureLocationSouthJail = document.getElementById('cureLocationSouthJail').checked;
+    const cureLocationEastJail = document.getElementById('cureLocationEastJail').checked;
+    const cureLocationNorthJail = document.getElementById('cureLocationNorthJail').checked;
+    const cureLocationDesertJail = document.getElementById('cureLocationDesertJail').checked;
     const cureLocationText = document.getElementById('cureLocationText').value;
 
     if (cureLocationSamePlace == true){
@@ -203,6 +208,16 @@ function generateText() {
         cureLocation = "本病院";
     } else if (cureLocationNorthHospital == true){
         cureLocation = "北病院";
+    } else if (cureLocationMainJail == true){
+        cureLocation = "7275 本署地下留置所";
+    } else if (cureLocationSouthJail == true){
+        cureLocation = "9148 南署留置所";
+    } else if (cureLocationEastJail == true){
+        cureLocation = "8047 東署地下留置所";
+    } else if (cureLocationNorthJail == true){
+        cureLocation = "1038 北署地下留置所";
+    } else if (cureLocationDesertJail == true){
+        cureLocation = "3004 砂漠署留置所";
     } else if (cureLocationUserInput == true){
         cureLocation = cureLocationText;
     }
@@ -443,6 +458,11 @@ function applyPreset(){
     document.getElementById('cureLocationNorthHospital').checked = preset.cureLocationNorthHospital;
     document.getElementById('cureLocationUserInput').checked = preset.cureLocationUserInput;
     document.getElementById('cureLocationText').value = preset.cureLocationText;
+    document.getElementById('cureLocationMainJail').checked = preset.cureLocationMainJail ? preset.cureLocationMainJail : false;
+    document.getElementById('cureLocationSouthJail').checked = preset.cureLocationSouthJail ? preset.cureLocationSouthJail : false;
+    document.getElementById('cureLocationEastJail').checked = preset.cureLocationEastJail ? preset.cureLocationEastJail : false;
+    document.getElementById('cureLocationNorthJail').checked = preset.cureLocationNorthJail ? preset.cureLocationNorthJail : false;
+    document.getElementById('cureLocationDesertJail').checked = preset.cureLocationDesertJail ? preset.cureLocationDesertJail : false;
 }
 
 function generatePreset(){
@@ -467,6 +487,11 @@ function generatePreset(){
     const cureLocationNorthHospital = document.getElementById('cureLocationNorthHospital').checked;
     const cureLocationUserInput = document.getElementById('cureLocationUserInput').checked;
     const cureLocationText = document.getElementById('cureLocationText').value;
+    const cureLocationMainJail = document.getElementById('cureLocationMainJail').checked;
+    const cureLocationSouthJail = document.getElementById('cureLocationSouthJail').checked;
+    const cureLocationEastJail = document.getElementById('cureLocationEastJail').checked;
+    const cureLocationNorthJail = document.getElementById('cureLocationNorthJail').checked;
+    const cureLocationDesertJail = document.getElementById('cureLocationDesertJail').checked;
 
     const presetData = {
         name,
@@ -489,7 +514,12 @@ function generatePreset(){
         cureLocationMainHospital,
         cureLocationNorthHospital,
         cureLocationUserInput,
-        cureLocationText
+        cureLocationText,
+        cureLocationMainJail,
+        cureLocationSouthJail,
+        cureLocationEastJail,
+        cureLocationNorthJail,
+        cureLocationDesertJail
     }
 
     return presetData;
@@ -549,7 +579,6 @@ function replaceArrayElements(array, targetId, sourceId) {
 
 function presetMoveUp() {
     const presetSelect = document.getElementById('presetSelect');
-    const presetOption = presetSelect.selectedOptions[0];
     const selectedIndex = presetSelect.selectedIndex;
     if (selectedIndex > 0){
         presets = replaceArrayElements(presets, selectedIndex, selectedIndex - 1);
