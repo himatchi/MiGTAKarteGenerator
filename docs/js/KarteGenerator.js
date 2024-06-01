@@ -316,7 +316,9 @@ function saveData() {
     const enableClipboard = document.getElementById('enableClipboard').checked;
     const autoPresetApply = document.getElementById('autoPresetApply').checked;
     const isDisableFeedback = document.getElementById('disableFeedback').checked;
-    const data = { doctor, nameDataSource, locationDataSource, enableClipboard, autoPresetApply, isDisableFeedback, presets};
+    const presetShowSize = document.getElementById('presetSelect').size;
+    const isPresetAutoCollapse = document.getElementById('presetAutoCollapse').checked;
+    const data = { doctor, nameDataSource, locationDataSource, enableClipboard, autoPresetApply, isDisableFeedback, presets, presetShowSize, isPresetAutoCollapse};
 
     localStorage.setItem('MiGTAKarteGeneratorData', JSON.stringify(data));
 }
@@ -331,6 +333,8 @@ function loadData() {
         document.getElementById('enableClipboard').checked = data.enableClipboard ? data.enableClipboard : false;
         document.getElementById('autoPresetApply').checked = data.autoPresetApply ? data.autoPresetApply : false;
         document.getElementById('disableFeedback').checked = data.isDisableFeedback ? data.isDisableFeedback : false;
+        document.getElementById('presetSelect').size = data.presetShowSize ? data.presetShowSize : 4;
+        document.getElementById('presetAutoCollapse').checked = data.isPresetAutoCollapse ? data.isPresetAutoCollapse : false;
         presets = data.presets ? data.presets : [];
     }
 }
@@ -472,6 +476,11 @@ function applyPreset(){
     document.getElementById('cureLocationEastJail').checked = preset.cureLocationEastJail ? preset.cureLocationEastJail : false;
     document.getElementById('cureLocationNorthJail').checked = preset.cureLocationNorthJail ? preset.cureLocationNorthJail : false;
     document.getElementById('cureLocationDesertJail').checked = preset.cureLocationDesertJail ? preset.cureLocationDesertJail : false;
+
+    const isPresetAutoCollapse = document.getElementById('presetAutoCollapse');
+    if(isPresetAutoCollapse){
+        collapsePreset();
+    }
 }
 
 function generatePreset(){
@@ -654,6 +663,26 @@ function highlightWanted(){
     const divFeedback = document.getElementById('divFeedback');
     const disableFeedback = document.getElementById('disableFeedback');
     divFeedback.hidden = disableFeedback.checked;
+  }
+
+  function showPreset(){
+    const presetTable = document.getElementById('presetTable');
+    const showPresetButton = document.getElementById('showPresetButton');
+    presetTable.hidden = false;
+    showPresetButton.hidden = true;
+  }
+  
+  function collapsePreset(){
+    const presetTable = document.getElementById('presetTable');
+    const showPresetButton = document.getElementById('showPresetButton');
+    presetTable.hidden = true;
+    showPresetButton.hidden = false;
+  }
+
+  function presetSizeChange(diff){
+    const presetSelect = document.getElementById('presetSelect');
+    const presetSize = presetSelect.size + parseInt(diff) > 0 ? presetSelect.size + parseInt(diff) : 0;
+    presetSelect.size = presetSize;
   }
 
   document.addEventListener('DOMContentLoaded', function() {

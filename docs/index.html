@@ -25,8 +25,15 @@
     <label>日時:</label>
     <input type="text" id="dateTime" placeholder="日時...">
     <input type="button" value="現在時刻" onclick="setDateTime()"><br>
-    <table><tr><td valign="top">
-    <label>プリセット:</label>
+    <table id="presetTable"><tr><td valign="top">
+    <label>プリセット:</label><br>
+    <input type="button" value="+" onclick="presetSizeChange(1)">
+    <input type="button" value="-" onclick="presetSizeChange(-1)">
+    <br>
+    <input type="checkbox" id="presetAutoCollapse" onchange="saveData()">
+    <label for="presetAutoCollapse">自動縮小</label>
+    <br>
+    <input type="button" id="collapsePreset" value="縮小" onclick="collapsePreset()">
     </td><td>
     <select id="presetSelect" size="4" onchange="changePresetSelect()">
     </select>
@@ -43,6 +50,7 @@
     <input type="checkbox" id="autoPresetApply" onchange="saveData()">
     <label for="autoPresetApply">選択時に自動読込</label>
     </td></tr></table>
+    <input type="button" id="showPresetButton" value="プリセット表示" onclick="showPreset()" hidden>
     <br>
     <table border="0"><tr><td>
     <label for="nameSearchBox">患者名:</label><br>
