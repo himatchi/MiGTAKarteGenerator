@@ -317,6 +317,7 @@ function saveData() {
     const autoPresetApply = document.getElementById('autoPresetApply').checked;
     const isDisableFeedback = document.getElementById('disableFeedback').checked;
     const presetShowSize = document.getElementById('presetSelect').size;
+    console.log(presetShowSize);
     const isPresetAutoCollapse = document.getElementById('presetAutoCollapse').checked;
     const data = { doctor, nameDataSource, locationDataSource, enableClipboard, autoPresetApply, isDisableFeedback, presets, presetShowSize, isPresetAutoCollapse};
 
@@ -477,7 +478,7 @@ function applyPreset(){
     document.getElementById('cureLocationNorthJail').checked = preset.cureLocationNorthJail ? preset.cureLocationNorthJail : false;
     document.getElementById('cureLocationDesertJail').checked = preset.cureLocationDesertJail ? preset.cureLocationDesertJail : false;
 
-    const isPresetAutoCollapse = document.getElementById('presetAutoCollapse');
+    const isPresetAutoCollapse = document.getElementById('presetAutoCollapse').checked;
     if(isPresetAutoCollapse){
         collapsePreset();
     }
@@ -683,6 +684,7 @@ function highlightWanted(){
     const presetSelect = document.getElementById('presetSelect');
     const presetSize = presetSelect.size + parseInt(diff) >= 2 ? presetSelect.size + parseInt(diff) : 2;
     presetSelect.size = presetSize;
+    saveData();
   }
 
   document.addEventListener('DOMContentLoaded', function() {
