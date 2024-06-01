@@ -6,13 +6,9 @@
   <!-- See also https://github.com/himatchi/MiGTAKarteGenerator/blob/main/LICENSE -->
 <meta charset="UTF-8">
 <title>カルテジェネレータ</title>
-<link href="css/style.css" rel="stylesheet" />
+<link href="css/lightstyle.css" rel="stylesheet" id="mystyle"/>
 <script src="js/WantedFinder.js"></script>
 <script src="js/KarteGenerator.js"></script>
-<style>
-
-</style>
-
 </head>
 <body>
 
@@ -151,7 +147,6 @@
     <button type="button" onclick="generateText()">文書を生成</button> 
     <button id="karteClearButton" type="button" onclick="clearInput()">クリア</button>
 
-
 <button onclick="toggleShowNameDataSource()">名前設定表示/非表示</button>
 <button onclick="toggleShowLocationDataSource()">場所設定表示/非表示</button>
 <button onclick="saveData()">保存</button>
@@ -173,7 +168,9 @@
 <label for="enableClipboard">クリップボードに自動コピー</label>
 <br>
 <input type="checkbox" id="disableFeedback" onchange="toggleShowFeedback(); saveData()">
-<label for="disableFeedback">感想を無効化</label>
+<label for="disableFeedback">感想を無効化</label><br>
+<input type="checkbox" id="forceLightDarkChange" onchange="toggleLightDark(); saveData()">
+<label for="forceLightDarkChange">強制ライト/ダークモード切替</label>
 <br><br>
 <button onclick="exportData()">エクスポート</button><br>
 <label>インポート：</label>

@@ -317,9 +317,9 @@ function saveData() {
     const autoPresetApply = document.getElementById('autoPresetApply').checked;
     const isDisableFeedback = document.getElementById('disableFeedback').checked;
     const presetShowSize = document.getElementById('presetSelect').size;
-    console.log(presetShowSize);
     const isPresetAutoCollapse = document.getElementById('presetAutoCollapse').checked;
-    const data = { doctor, nameDataSource, locationDataSource, enableClipboard, autoPresetApply, isDisableFeedback, presets, presetShowSize, isPresetAutoCollapse};
+    const isForceLightDarkChange = document.getElementById('forceLightDarkChange').checked;
+    const data = { doctor, nameDataSource, locationDataSource, enableClipboard, autoPresetApply, isDisableFeedback, presets, presetShowSize, isPresetAutoCollapse, isForceLightDarkChange};
 
     localStorage.setItem('MiGTAKarteGeneratorData', JSON.stringify(data));
 }
@@ -336,6 +336,7 @@ function loadData() {
         document.getElementById('disableFeedback').checked = data.isDisableFeedback ? data.isDisableFeedback : false;
         document.getElementById('presetSelect').size = data.presetShowSize ? data.presetShowSize : 4;
         document.getElementById('presetAutoCollapse').checked = data.isPresetAutoCollapse ? data.isPresetAutoCollapse : false;
+        document.getElementById('forceLightDarkChange').checked = data.isForceLightDarkChange ? data.isForceLightDarkChange : false;
         presets = data.presets ? data.presets : [];
     }
 }
@@ -359,10 +360,53 @@ function exportData() {
     document.body.removeChild(a);
 }
 
+function toggleLightDark(){
+    // StyleSetting
+    const mystyle = document.getElementById('mystyle');
+
+    // ブラウザがダークモードかどうかの判定
+    const isBrowserSettingDarkmode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    // 強制切替有効かどうか判定
+    const isForceChangeLightDark = document.getElementById('forceLightDarkChange').checked;
+    
+    let isDarkmode = isBrowserSettingDarkmode;
+    if (isForceChangeLightDark){
+        isDarkmode = !isDarkmode;
+    }
+
+    if (isDarkmode){
+        mystyle.href = 'css/darkstyle.css';
+    } else {
+        mystyle.href = 'css/lightstyle.css';
+    }
+}
+
+const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+ 
+darkModeMediaQuery.addListener((e) => {
+    const darkModeOn = e.matches;
+    const mystyle = document.getElementById('mystyle');
+    // 強制切替有効かどうか判定
+    const isForceChangeLightDark = document.getElementById('forceLightDarkChange').checked;
+
+    let isDarkmode = darkModeOn;
+    if (isForceChangeLightDark){
+        isDarkmode = !isDarkmode;
+    }
+
+    if (isDarkmode){
+        mystyle.href = 'css/darkstyle.css';
+    } else {
+        mystyle.href = 'css/lightstyle.css';
+    }
+});
+
 // ページ読み込み時のデータ読み込み処理など
 document.addEventListener('DOMContentLoaded', function() {
     loadData();
     clearInput();
+    toggleLightDark();
 
   //インポート処理
   document.getElementById('importData').addEventListener('change', function(event) {
@@ -695,4 +739,3 @@ function highlightWanted(){
     document.getElementById('checkNameRegisterWanted').addEventListener('change',(event)=>{highlightWanted()});
     document.getElementById('switchEnableWantedButton').addEventListener('click',(event)=>{highlightWanted()});
   });
-  

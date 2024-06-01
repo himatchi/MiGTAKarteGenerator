@@ -1,0 +1,64 @@
+/*
+MiGTA Karte Generator is licensed under the MIT License
+Copyright (c) 2024 himatchi
+See also https://github.com/himatchi/MiGTAKarteGenerator/blob/main/LICENSE
+*/
+
+:root {
+  --main-text: #cccccc;
+  --main-bg: #202020;
+  --main-border: ##202020;
+}
+
+body {
+  background-color: var(--main-bg);
+  color: var(--main-text);
+}
+
+input {
+  background-color: var(--main-bg);
+  color: var(--main-text);
+  border-color: var(--main-border);
+}
+
+select {
+  background-color: var(--main-bg);
+  color: var(--main-text);
+  border-color: var(--main-border);
+}
+
+textarea {
+  background-color: var(--main-bg);
+  color: var(--main-text);
+  border-color: var(--main-border);
+}
+
+button {
+  background-color: var(--main-bg);
+  color: var(--main-text);
+  border-color: var(--main-border);
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.fade-out {
+  animation: fadeOut 2.1s;
+}
+
+.highlightedWanted {
+  background-color: #ffcece;
+  color: #000;
+}
+
