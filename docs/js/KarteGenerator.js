@@ -681,7 +681,7 @@ function highlightWanted(){
 
   function presetSizeChange(diff){
     const presetSelect = document.getElementById('presetSelect');
-    const presetSize = presetSelect.size + parseInt(diff) > 0 ? presetSelect.size + parseInt(diff) : 0;
+    const presetSize = presetSelect.size + parseInt(diff) >= 2 ? presetSelect.size + parseInt(diff) : 2;
     presetSelect.size = presetSize;
   }
 
