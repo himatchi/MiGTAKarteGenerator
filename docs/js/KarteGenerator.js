@@ -500,6 +500,8 @@ document.getElementById('importData').addEventListener('change', function(event)
         presets = json.presets ? json.presets : [];
         if(json.customDarkColor && json.customDarkColor.isActive == true){
           customDarkColor = json.customDarkColor;
+          cdApply();
+          refreshCdValue();
         }
         saveData();
         clearInput();
