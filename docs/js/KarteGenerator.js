@@ -472,6 +472,7 @@ function cdReset(){
     saveData();
     cdApply();
     refreshCdValue();
+    toggleShowCustomDarkmode();
   }
 }
 
