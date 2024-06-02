@@ -7,7 +7,9 @@ See also https://github.com/himatchi/MiGTAKarteGenerator/blob/main/LICENSE
 :root {
   --main-text: #cccccc;
   --main-bg: #202020;
-  --main-border: ##202020;
+  --main-bt: #424242;
+  --main-border: #202020;
+  --main-accent: #d69739;
 }
 
 body {
@@ -19,6 +21,7 @@ input {
   background-color: var(--main-bg);
   color: var(--main-text);
   border-color: var(--main-border);
+  accent-color: var(--main-accent);
 }
 
 select {
@@ -34,7 +37,7 @@ textarea {
 }
 
 button {
-  background-color: var(--main-bg);
+  background-color: var(--main-bt);
   color: var(--main-text);
   border-color: var(--main-border);
 }
@@ -61,4 +64,3 @@ button {
   background-color: #ffcece;
   color: #000;
 }
-

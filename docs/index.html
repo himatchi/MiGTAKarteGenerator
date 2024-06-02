@@ -10,38 +10,36 @@
 <script src="js/WantedFinder.js"></script>
 <script src="js/KarteGenerator.js"></script>
 </head>
-<body>
-
+<body id="body">
 <h2>カルテジェネレータ</h2>
 <table>
-  <tr>
-  <td>
+  <tr><td>
     <label>治療者:</label>
     <input type="text" id="doctor" placeholder="治療者..." onchange="saveData()"><br>
     <label>日時:</label>
     <input type="text" id="dateTime" placeholder="日時...">
-    <input type="button" value="現在時刻" onclick="setDateTime()"><br>
+    <button onclick="setDateTime()">現在時刻</button><br>
     <table id="presetTable"><tr><td valign="top">
     <label>プリセット:</label><br>
-    <input type="button" value="+" onclick="presetSizeChange(1)">
-    <input type="button" value="-" onclick="presetSizeChange(-1)">
+    <button onclick="presetSizeChange(1)">+</button>
+    <button onclick="presetSizeChange(-1)">-</button>
     <br>
     <input type="checkbox" id="presetAutoCollapse" onchange="saveData()">
     <label for="presetAutoCollapse">自動縮小</label>
     <br>
-    <input type="button" id="collapsePreset" value="縮小" onclick="collapsePreset()">
+    <button id="collapsePreset" onclick="collapsePreset()">縮小</button>
     </td><td>
     <select id="presetSelect" size="4" onchange="changePresetSelect()">
     </select>
     </td><td>
     <input type="text" placeholder="プリセット名" id="presetName"><br>
-    <input type="button" value="↑" onclick="presetMoveUp()">
-    <input type="button" value="↓" onclick="presetMoveDown()">
-    <input type="button" value="追加" onclick="addPreset()">
-    <input type="button" value="上書き" onclick="savePreset()">
-    <input type="button" value="削除" onclick="deletePreset()">
+    <button onclick="presetMoveUp()">↑</button>
+    <button onclick="presetMoveDown()">↓</button>
+    <button onclick="addPreset()">追加</button>
+    <button onclick="savePreset()">上書き</button>
+    <button onclick="deletePreset()">削除</button>
     <br>
-    <input type="button" value="読込" onclick="applyPreset()">
+    <button onclick="applyPreset()">読込</button>
     <br>
     <input type="checkbox" id="autoPresetApply" onchange="saveData()">
     <label for="autoPresetApply">選択時に自動読込</label>
@@ -86,26 +84,26 @@
 
     <form>
     <div>治療場所:
-        <input type="radio" id="cureLocationSamePlace" name="cureLocation" value="samePlace">
-        <label for="cureLocationSamePlace">現場</label>
-        <input type="radio" id="cureLocationMainHospital" name="cureLocation" value="mainHospital" checked >
-        <label for="cureLocationMainHospital">本病院</label>
-        <input type="radio" id="cureLocationNorthHospital" name="cureLocation" value="northHospital">
-        <label for="cureLocationNorthHospital">北病院</label>
-        <input type="radio" id="cureLocationUserInput" name="cureLocation" value="userInput">
-        <label for="cureLocationUserInput">任意入力</label>
-        <input type="text" id="cureLocationText" placeholder="治療場所..."><br>
-        　↳留置所：
-        <input type="radio" id="cureLocationMainJail" name="cureLocation" value="mainJail">
-        <label for="cureLocationMainJail">本署</label>
-        <input type="radio" id="cureLocationSouthJail" name="cureLocation" value="southJail">
-        <label for="cureLocationSouthJail">南署</label>
-        <input type="radio" id="cureLocationEastJail" name="cureLocation" value="eastJail">
-        <label for="cureLocationEastJail">東署</label>
-        <input type="radio" id="cureLocationNorthJail" name="cureLocation" value="northJail">
-        <label for="cureLocationNorthJail">北署</label>
-        <input type="radio" id="cureLocationDesertJail" name="cureLocation" value="desertJail">
-        <label for="cureLocationDesertJail">砂漠署</label>
+      <input type="radio" id="cureLocationSamePlace" name="cureLocation" value="samePlace">
+      <label for="cureLocationSamePlace">現場</label>
+      <input type="radio" id="cureLocationMainHospital" name="cureLocation" value="mainHospital" checked >
+      <label for="cureLocationMainHospital">本病院</label>
+      <input type="radio" id="cureLocationNorthHospital" name="cureLocation" value="northHospital">
+      <label for="cureLocationNorthHospital">北病院</label>
+      <input type="radio" id="cureLocationUserInput" name="cureLocation" value="userInput">
+      <label for="cureLocationUserInput">任意入力</label>
+      <input type="text" id="cureLocationText" placeholder="治療場所..."><br>
+      　↳留置所：
+      <input type="radio" id="cureLocationMainJail" name="cureLocation" value="mainJail">
+      <label for="cureLocationMainJail">本署</label>
+      <input type="radio" id="cureLocationSouthJail" name="cureLocation" value="southJail">
+      <label for="cureLocationSouthJail">南署</label>
+      <input type="radio" id="cureLocationEastJail" name="cureLocation" value="eastJail">
+      <label for="cureLocationEastJail">東署</label>
+      <input type="radio" id="cureLocationNorthJail" name="cureLocation" value="northJail">
+      <label for="cureLocationNorthJail">北署</label>
+      <input type="radio" id="cureLocationDesertJail" name="cureLocation" value="desertJail">
+      <label for="cureLocationDesertJail">砂漠署</label>
     </div>
     </form>
 
@@ -120,7 +118,7 @@
     <label for="symptomD">火傷</label>
     <input type="checkbox" id="symptomE" name="symptom" value="気絶" onclick="billingUpdateSelectOptions()">
     <label for="symptomE" onclick="billingUpdateSelectOptions()">気絶</label>
-<br>
+    <br>
     <label>搬送：</label>
     <input type="checkbox" id="transportA" name="transport" value="本病院">
     <label for="transportA">本病院</label>
@@ -128,12 +126,12 @@
     <label for="transportB">北病院</label><br>
     <label for="billing">請求：</label>
     <select id="billing" name="billing">
-        <option value="院内治療">院内治療</option>
-        <option value="現場治療">現場治療</option>
-        <option value="院内治療(初心者割)">院内治療(初心者割)</option>
-        <option value="現場治療(初心者割)">現場治療(初心者割)</option>
-        <option value="ゆがみ対応">ゆがみ対応</option>
-        <option value="C対応・その他補填">C対応・その他補填</option>
+      <option value="院内治療">院内治療</option>
+      <option value="現場治療">現場治療</option>
+      <option value="院内治療(初心者割)">院内治療(初心者割)</option>
+      <option value="現場治療(初心者割)">現場治療(初心者割)</option>
+      <option value="ゆがみ対応">ゆがみ対応</option>
+      <option value="C対応・その他補填">C対応・その他補填</option>
     </select><br><br>
 
     <label for="remarks">備考：</label>
@@ -147,64 +145,83 @@
     <button type="button" onclick="generateText()">文書を生成</button> 
     <button id="karteClearButton" type="button" onclick="clearInput()">クリア</button>
 
-<button onclick="toggleShowNameDataSource()">名前設定表示/非表示</button>
-<button onclick="toggleShowLocationDataSource()">場所設定表示/非表示</button>
-<button onclick="saveData()">保存</button>
+    <button onclick="toggleShowNameDataSource()">名前設定表示/非表示</button>
+    <button onclick="toggleShowLocationDataSource()">場所設定表示/非表示</button>
+    <button onclick="saveData()">保存</button>
 
-<div id="nameDataSourceDiv" hidden>
-    <div>名前一覧 名前;読み仮名</div>
-    <textarea id="nameDataSource" rows="10" cols="50" oninput="nameUpdateSelectOptions()" onchange="saveData()"></textarea>
-</div>
+    <div id="nameDataSourceDiv" hidden>
+      <div>名前一覧 名前;読み仮名</div>
+      <textarea id="nameDataSource" rows="10" cols="50" oninput="nameUpdateSelectOptions()" onchange="saveData()"></textarea>
+    </div>
 
-<div id="locationDataSourceDiv" hidden>
-    <div>場所一覧 場所;読み仮名</div>
-    <textarea id="locationDataSource" rows="10" cols="50" oninput="locationUpdateSelectOptions()" onchange="saveData()"></textarea>
-</div>
+    <div id="locationDataSourceDiv" hidden>
+      <div>場所一覧 場所;読み仮名</div>
+      <textarea id="locationDataSource" rows="10" cols="50" oninput="locationUpdateSelectOptions()" onchange="saveData()"></textarea>
+    </div>
 
-<h3>生成文書：<span id="clipboardResult"></span></h3>
-<textarea id="outputText" rows="10" cols="50" ></textarea>
-<br>
-<input type="checkbox" id="enableClipboard" onchange="saveData()">
-<label for="enableClipboard">クリップボードに自動コピー</label>
-<br>
-<input type="checkbox" id="disableFeedback" onchange="toggleShowFeedback(); saveData()">
-<label for="disableFeedback">感想を無効化</label><br>
-<input type="checkbox" id="forceLightDarkChange" onchange="toggleLightDark(); saveData()">
-<label for="forceLightDarkChange">強制ライト/ダークモード切替</label>
-<br><br>
-<button onclick="exportData()">エクスポート</button><br>
-<label>インポート：</label>
-<input type="file" id="importData" accept=".json" /><br><br>
-<button onclick="switchDisplayWantedChecker()">指名手配チェッカー表示/非表示</button>
-</td>
-<td style="vertical-align: top;" id="wantedFinderTd">
-  指名手配メモ<br>
-  <select id="wantedList" size="20" onchange="selecedWantedChanged()"></select>
-  <br>
-  <button onclick="reloadWanted()">更新</button>
-  <button id="switchEnableWantedButton" onclick="switchEnableWanted()">有効化/無効化</button>
-  <button onclick="deleteWanted()">削除</button>
-  <input type="checkbox" id="autoReloadWanted" onchange="switchAutoReloadWanted()">
-  <label for="autoReloadWanted">自動更新(5分)</label>
-  <br>
-  <label for="wantedcreatedAt">作成時刻:</label>
-  <input id="wantedcreatedAt" type="datetime-local" readonly><br>
-  <label for="wantedTime">有効期限:</label>
-  <input id="wantedTime" type="datetime-local"><br>
-  <label for="wantedName">指名手配者名:</label>
-  <input id="wantedName" type="text" placeholder="名前" size="50"><br>
-  <textarea id="wantedDescription" rows="10" cols="50"></textarea><br>
-  <button onclick="addWanted()">追加</button>
-  <button onclick="clearWanted()">クリア</button>
-  <button onclick="overwriteWanted()">上書き</button><br>
-  <button onclick="forceReloadWanted()">強制リロード</button><br>
-  <input type="checkbox" id="checkNameRegisterWanted">
-  <label for="checkNameRegisterWanted">指名手配の名前登録状況チェック（患者名検索を空欄にすること）</label><br>
-  <div id="checkNameRegisterWantedResultDiv" hidden>以下は登録されてません：<br>
-    <textarea id="checkNameRegisterWantedResult" rows="10" cols="50" ></textarea>
-  </div>
-</td>
-</tr>
+    <h3>生成文書：<span id="clipboardResult"></span></h3>
+    <textarea id="outputText" rows="10" cols="50" ></textarea>
+    <br>
+    <input type="checkbox" id="enableClipboard" onchange="saveData()">
+    <label for="enableClipboard">クリップボードに自動コピー</label>
+    <br>
+    <input type="checkbox" id="disableFeedback" onchange="toggleShowFeedback(); saveData()">
+    <label for="disableFeedback">感想を無効化</label><br>
+    <input type="checkbox" id="forceLightDarkChange" onchange="applyLightDark(); saveData()">
+    <label for="forceLightDarkChange">強制ライト/ダークモード切替</label>
+    <br>
+    <span id="customDarkmodeButtonSpan" hidden>
+      <button onclick="toggleShowCustomDarkmode()">カスタムダークモード設定表示/非表示</button><br>
+    </span>
+    <span id="customDarkmodeSpan" hidden>
+      <label for="cdText">字:</label>
+      <input type="color" id="cdText"><br>
+      <label for="cdBg">背景</label>
+      <input type="color" id="cdBg"><br>
+      <label for="cdBorder">枠線</label>
+      <input type="color" id="cdBorder"><br>
+      <label for="cdBt">ボタン</label>
+      <input type="color" id="cdBt"><br>
+      <label for="cdAccent">アクセント</label>
+      <input type="color" id="cdAccent"><br>
+      <button onclick="cdAccept()">適用</button>
+      <button onclick="cdReset()">リセット</button>
+      <br>
+    </span>
+    <br>
+    <button onclick="exportData()">エクスポート</button><br>
+    <label>インポート：</label>
+    <input type="file" id="importData" accept=".json" /><br><br>
+    <button onclick="switchDisplayWantedChecker()">指名手配チェッカー表示/非表示</button>
+  </td>
+  <td style="vertical-align: top;" id="wantedFinderTd">
+    指名手配メモ<br>
+    <select id="wantedList" size="20" onchange="selecedWantedChanged()"></select>
+    <br>
+    <button onclick="reloadWanted()">更新</button>
+    <button id="switchEnableWantedButton" onclick="switchEnableWanted()">有効化/無効化</button>
+    <button onclick="deleteWanted()">削除</button>
+    <input type="checkbox" id="autoReloadWanted" onchange="switchAutoReloadWanted()">
+    <label for="autoReloadWanted">自動更新(5分)</label>
+    <br>
+    <label for="wantedcreatedAt">作成時刻:</label>
+    <input id="wantedcreatedAt" type="datetime-local" readonly><br>
+    <label for="wantedTime">有効期限:</label>
+    <input id="wantedTime" type="datetime-local"><br>
+    <label for="wantedName">指名手配者名:</label>
+    <input id="wantedName" type="text" placeholder="名前" size="50"><br>
+    <textarea id="wantedDescription" rows="10" cols="50"></textarea><br>
+    <button onclick="addWanted()">追加</button>
+    <button onclick="clearWanted()">クリア</button>
+    <button onclick="overwriteWanted()">上書き</button><br>
+    <button onclick="forceReloadWanted()">強制リロード</button><br>
+    <input type="checkbox" id="checkNameRegisterWanted">
+    <label for="checkNameRegisterWanted">指名手配の名前登録状況チェック（患者名検索を空欄にすること）</label><br>
+    <div id="checkNameRegisterWantedResultDiv" hidden>以下は登録されてません：<br>
+      <textarea id="checkNameRegisterWantedResult" rows="10" cols="50" ></textarea>
+    </div>
+  </td>
+  </tr>
 </table>
 </body>
 </html>

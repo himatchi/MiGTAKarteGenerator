@@ -16,8 +16,8 @@ async function reloadWanted(){
 
     // createdAtが24時間以内の要素のみを抽出
     data = loadedData.filter(item => {
-        const itemDate = Date.parse(item.createdAt);
-        return itemDate > oneDayAgo;
+      const itemDate = Date.parse(item.createdAt);
+      return itemDate > oneDayAgo;
     });
   }
   const newData = await fetchWanted(data, undefined);
@@ -162,8 +162,8 @@ function refreshWanted(newRawData, oldRawData){
   
     // limitが超過している要素を削除
     data = loadedData.filter(item => {
-        const itemDate = Date.parse(item.limit);
-        return itemDate > nowTime;
+      const itemDate = Date.parse(item.limit);
+      return itemDate > nowTime;
     });
   }
 
@@ -357,7 +357,7 @@ function switchAutoReloadWanted(){
 function removeFirstAndLastFour(str) {
   // 文字列が14文字未満の場合は、先頭と末尾の文字を削除できないため空文字列を返す
   if (str.length < 14) {
-      return "";
+    return "";
   }
   // 先頭10文字をスキップし、末尾4文字手前までの部分文字列を取り出す
   return str.slice(10, -4);
@@ -368,7 +368,7 @@ function removeDuplicatesByProperty(array, propName) {
   array.forEach(obj => {
     const normalizedKey = normalizeString(obj[propName]);
     if (!unique.has(normalizedKey)) {
-        unique.set(normalizedKey, obj);
+      unique.set(normalizedKey, obj);
     }
   });
 
@@ -377,9 +377,9 @@ function removeDuplicatesByProperty(array, propName) {
 }
 
 function normalizeString(str) {
-    // 全角数字を半角に変換
-    const fullWidthToHalfWidth = str.replace(/[０-９]/g, char => {
-      return String.fromCharCode(char.charCodeAt(0) - 0xFEE0);
+  // 全角数字を半角に変換
+  const fullWidthToHalfWidth = str.replace(/[０-９]/g, char => {
+    return String.fromCharCode(char.charCodeAt(0) - 0xFEE0);
   });
 
   // 小文字に変換し、すべての種類のスペースを削除
