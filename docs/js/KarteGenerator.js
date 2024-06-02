@@ -458,19 +458,21 @@ function cdAccept(){
 }
 
 function cdReset(){
-  customDarkColor = {
-    isActive: false,
-    color: {
-      text: '#cccccc',
-      bg: '#202020',
-      bt: '#424242',
-      border: '#666666',
-      accent: '#d69739'
+  if(window.confirm('カスタムダークモードをリセットしますか？(元に戻せません)')){
+    customDarkColor = {
+      isActive: false,
+      color: {
+        text: '#cccccc',
+        bg: '#202020',
+        bt: '#424242',
+        border: '#666666',
+        accent: '#d69739'
+      }
     }
+    saveData();
+    cdApply();
+    refreshCdValue();
   }
-  saveData();
-  cdApply();
-  refreshCdValue();
 }
 
 // ページ読み込み時のデータ読み込み処理など
