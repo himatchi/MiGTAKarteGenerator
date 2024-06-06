@@ -810,6 +810,10 @@ function presetSizeChange(diff){
   saveData();
 }
 
+function memoclear() {
+  document.getElementById('memospace').value = "";
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('nameSearchBox').addEventListener('input',(event)=>{highlightWanted()});
   document.getElementById('multipleNameSelectAdd').addEventListener('click',(event)=>{highlightWanted()});
