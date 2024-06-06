@@ -586,6 +586,85 @@ function refreshCdValue(){
   document.getElementById('cdAccent').value = customDarkColor.color.accent;
 }
 
+function toBase64(num) {
+  const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+=";
+  let result = "";
+  
+  if (num === 0) {
+      return chars[0];
+  }
+  
+  while (num > 0) {
+      result = chars[num % 64] + result;
+      num = Math.floor(num / 64);
+  }
+  
+  return result;
+}
+
+function parseBase64(str) {
+  const chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+=";
+  const base = 64;
+  let num = 0;
+  
+  for (let i = 0; i < str.length; i++) {
+      const char = str[i];
+      const value = chars.indexOf(char);
+      num = num * base + value;
+  }
+  
+  return num;
+}
+
+function refreshCdShareValue(){
+  let cdCode = ["","",""];
+  cdCode[0] += customDarkColor.color.text.slice(-6);
+  cdCode[0] += customDarkColor.color.bg.slice(-6);
+  cdCode[1] += customDarkColor.color.border.slice(-6);
+  cdCode[1] += customDarkColor.color.bt.slice(-6);
+  cdCode[2] += customDarkColor.color.btD.slice(-6);
+  cdCode[2] += customDarkColor.color.accent.slice(-6);
+  let cdInt = [0,0,0];
+  let cdx64 = ["","",""];
+  cdInt[0] = parseInt(cdCode[0],16);
+  cdInt[1] = parseInt(cdCode[1],16);
+  cdInt[2] = parseInt(cdCode[2],16);
+  for (let i = 0 ; i < 3; i++){
+    cdInt[i] = parseInt(cdCode[i],16);
+    cdx64[i] = toBase64(cdInt[i]);
+    while (cdx64[i].length < 8){
+      cdx64[i] = '0' + cdx64[i];
+    }
+  }
+  document.getElementById('cdShare').value = cdx64.join('');
+}
+
+function importCd(){
+  const cdShareInput = document.getElementById('cdShareInput').value;
+  let cdx64 = ['','',''];
+  let cdInt = [0,0,0];
+  let cdx16 = ['','',''];
+  for(let i = 0; i < 3; i++){
+    cdx64[i] = cdShareInput.slice(i * 8, (i+1)*8);
+    cdInt[i] = parseBase64(cdx64[i]);
+    cdx16[i] = cdInt[i].toString(16);
+    while (cdx16[i].length < 12){
+      cdx16[i] = '0' + cdx16[i];
+    }
+  }
+  customDarkColor.color.text = "#" + cdx16[0].slice(0,6);
+  customDarkColor.color.bg = "#" + cdx16[0].slice(6,12);
+  customDarkColor.color.border = "#" + cdx16[1].slice(0,6);
+  customDarkColor.color.bt = "#" + cdx16[1].slice(6,12);
+  customDarkColor.color.btD = "#" + cdx16[2].slice(0,6);
+  customDarkColor.color.accent = "#" + cdx16[2].slice(6,12);
+  customDarkColor.isActive = true;
+  cdApply();
+  refreshCdValue();
+  refreshCdShareValue();
+  saveData();
+}
+
 function cdAccept(){
   const cdText = document.getElementById('cdText').value;
   const cdBg = document.getElementById('cdBg').value;
@@ -602,6 +681,7 @@ function cdAccept(){
   customDarkColor.color.accent = cdAccent;
   saveData();
   cdApply();
+  refreshCdShareValue();
 }
 
 function cdReset(){
@@ -620,6 +700,7 @@ function cdReset(){
     saveData();
     cdApply();
     refreshCdValue();
+    refreshCdShareValue();
     toggleShowCustomDarkmode();
   }
 }
@@ -653,6 +734,7 @@ document.addEventListener('DOMContentLoaded', function() {
             customDarkColor = json.customDarkColor;
             cdApply();
             refreshCdValue();
+            refreshCdShareValue();
           }
           saveData();
           clearInput();
