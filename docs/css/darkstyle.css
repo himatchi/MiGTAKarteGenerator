@@ -8,6 +8,7 @@ See also https://github.com/himatchi/MiGTAKarteGenerator/blob/main/LICENSE
   --main-text: #cccccc;
   --main-bg: #202020;
   --main-bt: #424242;
+  --main-bt-disabled: #888888;
   --main-border: #666666;
   --main-accent: #d69739;
 }
@@ -38,6 +39,12 @@ textarea {
 
 button {
   background-color: var(--main-bt);
+  color: var(--main-text);
+  border-color: var(--main-border);
+}
+
+button:disabled {
+  background-color: var(--main-bt-disabled);
   color: var(--main-text);
   border-color: var(--main-border);
 }

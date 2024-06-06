@@ -11,10 +11,14 @@ var customDarkColor = {
     text: '#cccccc',
     bg: '#202020',
     bt: '#424242',
+    btD: '#888888',
     border: '#666666',
     accent: '#d69739'
   }
 };
+var beforeKarte = {};
+var tempKarte = {};
+var isLoaded = false;
 
 function nameUpdateSelectOptions() {
   const searchBox = document.getElementById('nameSearchBox');
@@ -284,6 +288,46 @@ function generateText() {
 }
 
 function clearInput() {
+  beforeKarte.dateTime = document.getElementById('dateTime').value;
+  beforeKarte.nameSearchBox = document.getElementById('nameSearchBox').value;
+  beforeKarte.locationSearchBox = document.getElementById('locationSearchBox').value;
+  beforeKarte.billing = document.getElementById('billing').value;
+  beforeKarte.remarks = document.getElementById('remarks').value;
+  beforeKarte.feedback = document.getElementById('feedback').value;
+  beforeKarte.symptomA = document.getElementById('symptomA').checked; //打撲
+  beforeKarte.symptomB = document.getElementById('symptomB').checked; //出血
+  beforeKarte.symptomC = document.getElementById('symptomC').checked; //銃創
+  beforeKarte.symptomD = document.getElementById('symptomD').checked; //火傷
+  beforeKarte.symptomE = document.getElementById('symptomE').checked; //気絶
+  beforeKarte.transportA = document.getElementById('transportA').checked; //本病院
+  beforeKarte.transportB = document.getElementById('transportB').checked; //北病院
+  beforeKarte.disableFeedback = document.getElementById('disableNameSearch').checked;
+  beforeKarte.multipleNameSelectEnable = document.getElementById('multipleNameSelectEnable').checked;
+  beforeKarte.disableLocationSearch = document.getElementById('disableLocationSearch').checked;
+  beforeKarte.outputText = document.getElementById('outputText').value;
+  beforeKarte.multipleNameSelect = document.getElementById('multipleNameSelect').innerHTML;
+  beforeKarte.nameDataSourceDiv = document.getElementById('nameDataSourceDiv').hidden;
+  beforeKarte.locationDataSourceDiv = document.getElementById('locationDataSourceDiv').hidden;
+  beforeKarte.clipboardResult = document.getElementById('clipboardResult').innerText;
+  beforeKarte.disableNameSearchDescription = document.getElementById('disableNameSearchDescription').hidden;
+  beforeKarte.disableLocationSearchDescription = document.getElementById('disableLocationSearchDescription').hidden;
+  beforeKarte.unknownLocation = document.getElementById('unknownLocation').checked;
+  beforeKarte.cureLocationSamePlace = document.getElementById('cureLocationSamePlace').checked;
+  beforeKarte.cureLocationMainHospital = document.getElementById('cureLocationMainHospital').checked;
+  beforeKarte.cureLocationNorthHospital = document.getElementById('cureLocationNorthHospital').checked;
+  beforeKarte.cureLocationUserInput = document.getElementById('cureLocationUserInput').checked;
+  beforeKarte.cureLocationMainJail = document.getElementById('cureLocationMainJail').checked;
+  beforeKarte.cureLocationSouthJail = document.getElementById('cureLocationSouthJail').checked;
+  beforeKarte.cureLocationEastJail = document.getElementById('cureLocationEastJail').checked;
+  beforeKarte.cureLocationNorthJail = document.getElementById('cureLocationNorthJail').checked;
+  beforeKarte.cureLocationDesertJail = document.getElementById('cureLocationDesertJail').checked;
+  beforeKarte.cureLocationText = document.getElementById('cureLocationText').value;
+  beforeKarte.presetName = document.getElementById('presetName').value;
+  beforeKarte.nameResultSelect = document.getElementById('nameResultSelect').selectedIndex;
+  beforeKarte.multipleNameSelect = document.getElementById('multipleNameSelect').selectedIndex;
+  beforeKarte.locationResultSelect = document.getElementById('locationResultSelect').selectedIndex;
+  beforeKarte.presetSelect = document.getElementById('presetSelect').selectedIndex;
+
   document.getElementById('dateTime').value = "";
   document.getElementById('nameSearchBox').value = "";
   document.getElementById('locationSearchBox').value = "";
@@ -311,12 +355,105 @@ function clearInput() {
   document.getElementById('cureLocationMainHospital').checked = true;
   document.getElementById('cureLocationText').value = "";
   document.getElementById('presetName').value = "";
+  if (isLoaded == true){
+    document.getElementById('karteClearUndoButton').disabled = false;
+  }
   toggleMultipleNameSelect();
   toggleShowFeedback();
   nameUpdateSelectOptions();
   locationUpdateSelectOptions();
   billingUpdateSelectOptions();
   presetUpdateSelectOptions();
+}
+
+function clearUndo(){
+  tempKarte.dateTime = document.getElementById('dateTime').value;
+  tempKarte.nameSearchBox = document.getElementById('nameSearchBox').value;
+  tempKarte.locationSearchBox = document.getElementById('locationSearchBox').value;
+  tempKarte.remarks = document.getElementById('remarks').value;
+  tempKarte.feedback = document.getElementById('feedback').value;
+  tempKarte.symptomA = document.getElementById('symptomA').checked; //打撲
+  tempKarte.symptomB = document.getElementById('symptomB').checked; //出血
+  tempKarte.symptomC = document.getElementById('symptomC').checked; //銃創
+  tempKarte.symptomD = document.getElementById('symptomD').checked; //火傷
+  tempKarte.symptomE = document.getElementById('symptomE').checked; //気絶
+  tempKarte.transportA = document.getElementById('transportA').checked; //本病院
+  tempKarte.transportB = document.getElementById('transportB').checked; //北病院
+  tempKarte.disableFeedback = document.getElementById('disableNameSearch').checked;
+  tempKarte.multipleNameSelectEnable = document.getElementById('multipleNameSelectEnable').checked;
+  tempKarte.disableLocationSearch = document.getElementById('disableLocationSearch').checked;
+  tempKarte.outputText = document.getElementById('outputText').value;
+  tempKarte.multipleNameSelect = document.getElementById('multipleNameSelect').innerHTML;
+  tempKarte.nameDataSourceDiv = document.getElementById('nameDataSourceDiv').hidden;
+  tempKarte.locationDataSourceDiv = document.getElementById('locationDataSourceDiv').hidden;
+  tempKarte.clipboardResult = document.getElementById('clipboardResult').innerText;
+  tempKarte.disableNameSearchDescription = document.getElementById('disableNameSearchDescription').hidden;
+  tempKarte.disableLocationSearchDescription = document.getElementById('disableLocationSearchDescription').hidden;
+  tempKarte.unknownLocation = document.getElementById('unknownLocation').checked;
+  tempKarte.cureLocationSamePlace = document.getElementById('cureLocationSamePlace').checked;
+  tempKarte.cureLocationMainHospital = document.getElementById('cureLocationMainHospital').checked;
+  tempKarte.cureLocationNorthHospital = document.getElementById('cureLocationNorthHospital').checked;
+  tempKarte.cureLocationUserInput = document.getElementById('cureLocationUserInput').checked;
+  tempKarte.cureLocationMainJail = document.getElementById('cureLocationMainJail').checked;
+  tempKarte.cureLocationSouthJail = document.getElementById('cureLocationSouthJail').checked;
+  tempKarte.cureLocationEastJail = document.getElementById('cureLocationEastJail').checked;
+  tempKarte.cureLocationNorthJail = document.getElementById('cureLocationNorthJail').checked;
+  tempKarte.cureLocationDesertJail = document.getElementById('cureLocationDesertJail').checked;
+  tempKarte.cureLocationText = document.getElementById('cureLocationText').value;
+  tempKarte.presetName = document.getElementById('presetName').value;
+  tempKarte.billing = document.getElementById('billing').value;
+  tempKarte.nameResultSelect = document.getElementById('nameResultSelect').selectedIndex;
+  tempKarte.multipleNameSelect = document.getElementById('multipleNameSelect').selectedIndex;
+  tempKarte.locationResultSelect = document.getElementById('locationResultSelect').selectedIndex;
+  tempKarte.presetSelect = document.getElementById('presetSelect').selectedIndex;
+
+  document.getElementById('dateTime').value = beforeKarte.dateTime;
+  document.getElementById('nameSearchBox').value = beforeKarte.nameSearchBox;
+  document.getElementById('locationSearchBox').value = beforeKarte.locationSearchBox;
+  document.getElementById('remarks').value = beforeKarte.remarks;
+  document.getElementById('feedback').value = beforeKarte.feedback;
+  document.getElementById('symptomA').checked = beforeKarte.symptomA; //打撲
+  document.getElementById('symptomB').checked = beforeKarte.symptomB; //出血
+  document.getElementById('symptomC').checked = beforeKarte.symptomC; //銃創
+  document.getElementById('symptomD').checked = beforeKarte.symptomD; //火傷
+  document.getElementById('symptomE').checked = beforeKarte.symptomE; //気絶
+  document.getElementById('transportA').checked = beforeKarte.transportA; //本病院
+  document.getElementById('transportB').checked = beforeKarte.transportB; //北病院
+  document.getElementById('disableNameSearch').checked = beforeKarte.disableFeedback;
+  document.getElementById('multipleNameSelectEnable').checked = beforeKarte.multipleNameSelectEnable;
+  document.getElementById('disableLocationSearch').checked = beforeKarte.disableLocationSearch ;
+  document.getElementById('outputText').value = beforeKarte.outputText;
+  document.getElementById('multipleNameSelect').innerHTML = beforeKarte.multipleNameSelect;
+  document.getElementById('nameDataSourceDiv').hidden = beforeKarte.nameDataSourceDiv;
+  document.getElementById('locationDataSourceDiv').hidden = beforeKarte.locationDataSourceDiv;
+  document.getElementById('clipboardResult').innerText = beforeKarte.clipboardResult;
+  document.getElementById('disableNameSearchDescription').hidden = beforeKarte.disableNameSearchDescription;
+  document.getElementById('disableLocationSearchDescription').hidden = beforeKarte.disableLocationSearchDescription;
+  document.getElementById('unknownLocation').checked = beforeKarte.unknownLocation;
+  document.getElementById('cureLocationSamePlace').checked = beforeKarte.cureLocationSamePlace;
+  document.getElementById('cureLocationMainHospital').checked = beforeKarte.cureLocationMainHospital;
+  document.getElementById('cureLocationNorthHospital').checked = beforeKarte.cureLocationNorthHospital;
+  document.getElementById('cureLocationUserInput').checked = beforeKarte.cureLocationUserInput;
+  document.getElementById('cureLocationMainJail').checked = beforeKarte.cureLocationMainJail;
+  document.getElementById('cureLocationSouthJail').checked = beforeKarte.cureLocationSouthJail;
+  document.getElementById('cureLocationEastJail').checked = beforeKarte.cureLocationEastJail;
+  document.getElementById('cureLocationNorthJail').checked = beforeKarte.cureLocationNorthJail;
+  document.getElementById('cureLocationDesertJail').checked = beforeKarte.cureLocationDesertJail;
+  document.getElementById('cureLocationText').value = beforeKarte.cureLocationText;
+  document.getElementById('presetName').value = beforeKarte.presetName;
+
+  toggleMultipleNameSelect();
+  toggleShowFeedback();
+  nameUpdateSelectOptions();
+  locationUpdateSelectOptions();
+  billingUpdateSelectOptions();
+  document.getElementById('billing').value = beforeKarte.billing;
+  document.getElementById('nameResultSelect').selectedIndex = beforeKarte.nameResultSelect;
+  document.getElementById('multipleNameSelect').selectedIndex = beforeKarte.multipleNameSelect;
+  document.getElementById('locationResultSelect').selectedIndex = beforeKarte.locationResultSelect;
+  document.getElementById('presetSelect').selectedIndex = beforeKarte.presetSelect;
+
+  beforeKarte = {...tempKarte};
 }
 
 function saveData() {
@@ -361,7 +498,13 @@ function loadData() {
     document.getElementById('forceLightDarkChange').checked = data.isForceLightDarkChange ? data.isForceLightDarkChange : false;
     presets = data.presets ? data.presets : [];
     if (data.customDarkColor && data.customDarkColor.isActive == true) {
-      customDarkColor = data.customDarkColor;
+      customDarkColor.isActive = true;
+      customDarkColor.color.text = data.customDarkColor.color.text ? data.customDarkColor.color.text : '#cccccc';
+      customDarkColor.color.bg = data.customDarkColor.color.bg ? data.customDarkColor.color.bg : '#202020';
+      customDarkColor.color.bt = data.customDarkColor.color.bt ? data.customDarkColor.color.bt : '#424242';
+      customDarkColor.color.btD = data.customDarkColor.color.btD ? data.customDarkColor.color.btD : '#888888';
+      customDarkColor.color.border = data.customDarkColor.color.border ? data.customDarkColor.color.border : '#666666';
+      customDarkColor.color.accent = data.customDarkColor.color.accent ? data.customDarkColor.color.accent : '#d69739';
     }
     refreshCdValue();
   }
@@ -425,6 +568,7 @@ function cdApply(){
   cssRoot.style.setProperty('--main-bg', customDarkColor.color.bg);
   cssRoot.style.setProperty('--main-border', customDarkColor.color.border);
   cssRoot.style.setProperty('--main-bt', customDarkColor.color.bt);
+  cssRoot.style.setProperty('--main-bt-disabled', customDarkColor.color.btD);
   cssRoot.style.setProperty('--main-accent', customDarkColor.color.accent);
 }
 
@@ -438,6 +582,7 @@ function refreshCdValue(){
   document.getElementById('cdBg').value = customDarkColor.color.bg;
   document.getElementById('cdBorder').value = customDarkColor.color.border;
   document.getElementById('cdBt').value = customDarkColor.color.bt;
+  document.getElementById('cdBtD').value = customDarkColor.color.btD;
   document.getElementById('cdAccent').value = customDarkColor.color.accent;
 }
 
@@ -446,12 +591,14 @@ function cdAccept(){
   const cdBg = document.getElementById('cdBg').value;
   const cdBorder = document.getElementById('cdBorder').value;
   const cdBt = document.getElementById('cdBt').value;
+  const cdBtD = document.getElementById('cdBtD').value;
   const cdAccent = document.getElementById('cdAccent').value;
   customDarkColor.isActive = true;
   customDarkColor.color.text = cdText;
   customDarkColor.color.bg = cdBg;
   customDarkColor.color.border = cdBorder;
   customDarkColor.color.bt = cdBt;
+  customDarkColor.color.btD = cdBtD;
   customDarkColor.color.accent = cdAccent;
   saveData();
   cdApply();
@@ -465,6 +612,7 @@ function cdReset(){
         text: '#cccccc',
         bg: '#202020',
         bt: '#424242',
+        btD: '#888888',
         border: '#666666',
         accent: '#d69739'
       }
@@ -482,42 +630,42 @@ document.addEventListener('DOMContentLoaded', function() {
   clearInput();
   applyLightDark();
 
-//インポート処理
-document.getElementById('importData').addEventListener('change', function(event) {
-  const file = event.target.files[0];
-  if (!file) {
-    return;
-  }
-  event.target.value = "";
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const text = e.target.result;
-
-    // テキストをJSONとして解析
-    try {
-      const json = JSON.parse(text);
-      if(json){
-        document.getElementById('doctor').value = json.doctor ? json.doctor : "";
-        document.getElementById('nameDataSource').value = json.nameDataSource ? json.nameDataSource : "";
-        document.getElementById('locationDataSource').value = json.locationDataSource ? json.locationDataSource : "";
-        presets = json.presets ? json.presets : [];
-        if(json.customDarkColor && json.customDarkColor.isActive == true){
-          customDarkColor = json.customDarkColor;
-          cdApply();
-          refreshCdValue();
-        }
-        saveData();
-        clearInput();
-      }
-    } catch (error) {
-      console.error('JSONの解析に失敗しました:', error);
+  //インポート処理
+  document.getElementById('importData').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (!file) {
+      return;
     }
-  };
+    event.target.value = "";
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const text = e.target.result;
 
-  // ファイルの内容をテキストとして読み込む
-  reader.readAsText(file);
+      // テキストをJSONとして解析
+      try {
+        const json = JSON.parse(text);
+        if(json){
+          document.getElementById('doctor').value = json.doctor ? json.doctor : "";
+          document.getElementById('nameDataSource').value = json.nameDataSource ? json.nameDataSource : "";
+          document.getElementById('locationDataSource').value = json.locationDataSource ? json.locationDataSource : "";
+          presets = json.presets ? json.presets : [];
+          if(json.customDarkColor && json.customDarkColor.isActive == true){
+            customDarkColor = json.customDarkColor;
+            cdApply();
+            refreshCdValue();
+          }
+          saveData();
+          clearInput();
+        }
+      } catch (error) {
+        console.error('JSONの解析に失敗しました:', error);
+      }
+    };
+
+    // ファイルの内容をテキストとして読み込む
+    reader.readAsText(file);
   });
-
+  isLoaded = true;
 });
 
 function addMultipleName() {

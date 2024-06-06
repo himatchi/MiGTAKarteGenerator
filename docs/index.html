@@ -142,9 +142,9 @@
       <textarea id="feedback" name="feedback" cols="50"></textarea>
       <br><br>
     </div>
-    <button type="button" onclick="generateText()">文書を生成</button> 
-    <button id="karteClearButton" type="button" onclick="clearInput()">クリア</button>
-
+    <button onclick="generateText()">文書を生成</button> 
+    <button id="karteClearButton" onclick="clearInput()">クリア</button>
+    <button id="karteClearUndoButton" onclick="clearUndo()" disabled>クリア取消</button>
     <button onclick="toggleShowNameDataSource()">名前設定表示/非表示</button>
     <button onclick="toggleShowLocationDataSource()">場所設定表示/非表示</button>
     <button onclick="saveData()">保存</button>
@@ -182,6 +182,8 @@
       <input type="color" id="cdBorder"><br>
       <label for="cdBt">ボタン</label>
       <input type="color" id="cdBt"><br>
+      <label for="cdBtD">ボタン(無効)</label>
+      <input type="color" id="cdBtD"><br>
       <label for="cdAccent">アクセント</label>
       <input type="color" id="cdAccent"><br>
       <button onclick="cdAccept()">適用</button>
