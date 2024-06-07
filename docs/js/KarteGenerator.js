@@ -466,6 +466,7 @@ function saveData() {
   const presetShowSize = document.getElementById('presetSelect').size;
   const isPresetAutoCollapse = document.getElementById('presetAutoCollapse').checked;
   const isForceLightDarkChange = document.getElementById('forceLightDarkChange').checked;
+  const isHiddenMemoSpace = document.getElementById('memoSpaceTd').hidden;
   const data = { 
     doctor, 
     nameDataSource, 
@@ -477,7 +478,8 @@ function saveData() {
     presetShowSize, 
     isPresetAutoCollapse, 
     isForceLightDarkChange, 
-    customDarkColor
+    customDarkColor,
+    isHiddenMemoSpace
   };
 
   localStorage.setItem('MiGTAKarteGeneratorData', JSON.stringify(data));
@@ -496,6 +498,7 @@ function loadData() {
     document.getElementById('presetSelect').size = data.presetShowSize ? data.presetShowSize : 4;
     document.getElementById('presetAutoCollapse').checked = data.isPresetAutoCollapse ? data.isPresetAutoCollapse : false;
     document.getElementById('forceLightDarkChange').checked = data.isForceLightDarkChange ? data.isForceLightDarkChange : false;
+    document.getElementById('memoSpaceTd').hidden = data.isHiddenMemoSpace ? data.isHiddenMemoSpace : false;
     presets = data.presets ? data.presets : [];
     if (data.customDarkColor && data.customDarkColor.isActive == true) {
       customDarkColor.isActive = true;
@@ -1042,6 +1045,12 @@ function presetSizeChange(diff){
 
 function memoclear() {
   document.getElementById('memospace').value = "";
+}
+
+function switchDisplayMemo(){
+  const memoSpaceTd =  document.getElementById('memoSpaceTd');
+  memoSpaceTd.hidden = !(memoSpaceTd.hidden);
+  saveData();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
