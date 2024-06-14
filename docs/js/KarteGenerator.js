@@ -253,12 +253,14 @@ function generateText() {
 
   const isTransportA = document.getElementById('transportA').checked; //本病院
   const isTransportB = document.getElementById('transportB').checked; //北病院
+  const isTransportC = document.getElementById('transportC').checked; //砂漠病院
 
   let symptomsText = Array.from(symptoms).map(symptom => symptom.value).join('・');
   let actionText = "";
 
   if (isTransportA) actionText = actionText + "本病院に搬送し、";
   if (isTransportB) actionText = actionText + "北病院に搬送し、";
+  if (isTransportC) actionText = actionText + "砂漠病院に搬送し、";
 
   if (isSymptomA) actionText = actionText + "アイスパックで患部を冷やし、";
   if (isSymptomB) actionText = actionText + "縫合キットで患部を縫合し、";
@@ -301,6 +303,7 @@ function clearInput() {
   beforeKarte.symptomE = document.getElementById('symptomE').checked; //気絶
   beforeKarte.transportA = document.getElementById('transportA').checked; //本病院
   beforeKarte.transportB = document.getElementById('transportB').checked; //北病院
+  beforeKarte.transportC = document.getElementById('transportC').checked; //砂漠病院
   beforeKarte.disableFeedback = document.getElementById('disableNameSearch').checked;
   beforeKarte.multipleNameSelectEnable = document.getElementById('multipleNameSelectEnable').checked;
   beforeKarte.disableLocationSearch = document.getElementById('disableLocationSearch').checked;
@@ -341,6 +344,7 @@ function clearInput() {
   document.getElementById('symptomE').checked = false; //気絶
   document.getElementById('transportA').checked = false; //本病院
   document.getElementById('transportB').checked = false; //北病院
+  document.getElementById('transportC').checked = false; //砂漠病院
   document.getElementById('disableNameSearch').checked = false;
   document.getElementById('multipleNameSelectEnable').checked = false;
   document.getElementById('disableLocationSearch').checked = false;
@@ -379,6 +383,7 @@ function clearUndo(){
   tempKarte.symptomE = document.getElementById('symptomE').checked; //気絶
   tempKarte.transportA = document.getElementById('transportA').checked; //本病院
   tempKarte.transportB = document.getElementById('transportB').checked; //北病院
+  tempKarte.transportC = document.getElementById('transportC').checked; //砂漠病院
   tempKarte.disableFeedback = document.getElementById('disableNameSearch').checked;
   tempKarte.multipleNameSelectEnable = document.getElementById('multipleNameSelectEnable').checked;
   tempKarte.disableLocationSearch = document.getElementById('disableLocationSearch').checked;
@@ -419,6 +424,7 @@ function clearUndo(){
   document.getElementById('symptomE').checked = beforeKarte.symptomE; //気絶
   document.getElementById('transportA').checked = beforeKarte.transportA; //本病院
   document.getElementById('transportB').checked = beforeKarte.transportB; //北病院
+  document.getElementById('transportC').checked = beforeKarte.transportC; //砂漠病院
   document.getElementById('disableNameSearch').checked = beforeKarte.disableFeedback;
   document.getElementById('multipleNameSelectEnable').checked = beforeKarte.multipleNameSelectEnable;
   document.getElementById('disableLocationSearch').checked = beforeKarte.disableLocationSearch ;
@@ -815,6 +821,7 @@ function applyPreset(){
   document.getElementById('symptomE').checked = preset.symptomE; //気絶
   document.getElementById('transportA').checked = preset.transportA; //本病院
   document.getElementById('transportB').checked = preset.transportB; //北病院
+  document.getElementById('transportC').checked = preset.transportC; //砂漠病院
   billingUpdateSelectOptions();
   document.getElementById('billing').value = preset.billing;
   document.getElementById('remarks').value = preset.remarks;
@@ -853,6 +860,7 @@ function generatePreset(){
   const symptomE = document.getElementById('symptomE').checked; //気絶
   const transportA = document.getElementById('transportA').checked; //本病院
   const transportB = document.getElementById('transportB').checked; //北病院
+  const transportC = document.getElementById('transportC').checked; //砂漠病院
   const selectedLocation = document.getElementById('locationResultSelect').value;
   const disableLocationSearch = document.getElementById('disableLocationSearch').checked;
   const disableLocationSearchDescription = document.getElementById('disableLocationSearchDescription').hidden;
@@ -881,6 +889,7 @@ function generatePreset(){
     symptomE,
     transportA,
     transportB,
+    transportC,
     selectedLocation,
     disableLocationSearch,
     disableLocationSearchDescription,
