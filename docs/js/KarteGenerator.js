@@ -760,6 +760,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function addMultipleName() {
+  const nameSearchBox = document.getElementById('nameSearchBox');
   let leftSelect = document.getElementById("nameResultSelect");
   let rightSelect = document.getElementById("multipleNameSelect");
 
@@ -771,6 +772,10 @@ function addMultipleName() {
     let option = selectedOptions[i];
     // 新しいオプション要素を作成して右のセレクト要素に追加
     rightSelect.appendChild(option.cloneNode(true));
+  }
+
+  if (selectedOptions.length > 0){
+    nameSearchBox.value = '';
   }
 }
 
