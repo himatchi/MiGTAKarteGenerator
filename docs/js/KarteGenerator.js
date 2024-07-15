@@ -280,6 +280,13 @@ function generateText() {
     generatedText = generatedText + `\n感想「${feedback}」`;
   }
 
+  const isAddTitleCol = document.getElementById('addTitleCol').checked;
+
+  if (isAddTitleCol == true){
+    let allName = name.split('\nName：').join(' / ');
+    generatedText = generatedText + `\n${allName}`;
+  }
+
   document.getElementById('outputText').value = generatedText;
   document.getElementById('nameDataSourceDiv').hidden = true;
   document.getElementById('locationDataSourceDiv').hidden = true;
@@ -468,6 +475,7 @@ function saveData() {
   const locationDataSource = document.getElementById('locationDataSource').value;
   const enableClipboard = document.getElementById('enableClipboard').checked;
   const autoPresetApply = document.getElementById('autoPresetApply').checked;
+  const isAddTitleCol = document.getElementById('addTitleCol').checked;
   const isDisableFeedback = document.getElementById('disableFeedback').checked;
   const presetShowSize = document.getElementById('presetSelect').size;
   const isPresetAutoCollapse = document.getElementById('presetAutoCollapse').checked;
@@ -478,7 +486,8 @@ function saveData() {
     nameDataSource, 
     locationDataSource, 
     enableClipboard, 
-    autoPresetApply, 
+    autoPresetApply,
+    isAddTitleCol,
     isDisableFeedback, 
     presets, 
     presetShowSize, 
@@ -500,6 +509,7 @@ function loadData() {
     document.getElementById('locationDataSource').value = data.locationDataSource ? data.locationDataSource : "";
     document.getElementById('enableClipboard').checked = data.enableClipboard ? data.enableClipboard : false;
     document.getElementById('autoPresetApply').checked = data.autoPresetApply ? data.autoPresetApply : false;
+    document.getElementById('addTitleCol').checked = data.isAddTitleCol ? data.isAddTitleCol : false;
     document.getElementById('disableFeedback').checked = data.isDisableFeedback ? data.isDisableFeedback : false;
     document.getElementById('presetSelect').size = data.presetShowSize ? data.presetShowSize : 4;
     document.getElementById('presetAutoCollapse').checked = data.isPresetAutoCollapse ? data.isPresetAutoCollapse : false;
