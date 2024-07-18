@@ -281,8 +281,9 @@ function generateText() {
   }
 
   const isAddTitleCol = document.getElementById('addTitleCol').checked;
+  const isMultipleNameSelectEnable = document.getElementById('multipleNameSelectEnable').checked;
 
-  if (isAddTitleCol == true){
+  if (isAddTitleCol == true && isMultipleNameSelectEnable == true){
     let allName = name.split('\nName：').join(' / ');
     generatedText = generatedText + `\n${allName}`;
   }
